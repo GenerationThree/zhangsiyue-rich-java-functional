@@ -52,5 +52,21 @@ public class PlayerUseRobotTest {
         player.useRobot();
 
         assertThat(map.getTool(blockPoint), is(nullValue()));
+        assertThat(player.getTools().size(), is(0));
+    }
+
+
+    @Test
+    public void should_not_use_robot_without_robot() throws Exception {
+        Land blockPoint = mock(Land.class);
+        Land endPoint = mock(Land.class);
+        map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
+        player = Player.createPlayerWithStart(1, map, dice, startPoint);
+
+        assertThat(map.getTool(blockPoint), notNullValue());
+
+        player.useRobot();
+
+        assertThat(map.getTool(blockPoint), notNullValue());
     }
 }

@@ -219,7 +219,13 @@ public class Player {
     }
 
     public void useRobot() {
-        map.removeToll(current);
+        for (Tool tool:tools){
+            if(tool.getType() == Tool.Type.ROBOT) {
+                map.removeToll(current);
+                tools.remove(tool);
+                break;
+            }
+        }
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
