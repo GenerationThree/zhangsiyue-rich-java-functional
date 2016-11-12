@@ -12,7 +12,7 @@ public class Player {
     private Status status;
     private double balance;
     private List<Land> lands;
-    private boolean free;
+    private int freeTurn;
     private int waitTurn;
     private Map map;
     private Dice dice;
@@ -25,7 +25,7 @@ public class Player {
         this.dice = dice;
         status = Status.WAIT_COMMAND;
         lands = new ArrayList<>();
-        free = false;
+        freeTurn = 0;
         waitTurn = 0;
     }
 
@@ -42,11 +42,11 @@ public class Player {
         return player;
     }
 
-    public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance) {
+    public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance, int freeTurns) {
         Player player = new Player(id, map, dice);
         player.current = start;
         player.balance = balance;
-        player.free = true;
+        player.freeTurn = freeTurns;
         return player;
     }
 
@@ -80,12 +80,13 @@ public class Player {
     }
 
     private void payFee(Player owner) {
-        if (!free) {
+        if (freeTurn <= 0) {
             double fee = current.getPrice() * current.getLevel().getTimes();
             if (balance >= fee) {
                 balance -= fee;
                 owner.gain(fee);
             }else {
+                freeTurn --;
                 status = Status.END_GAME;
                 return;
             }
@@ -133,6 +134,12 @@ public class Player {
         this.points += points;
     }
 
+    public void selectGift(int i) {
+        current.getGift(i, this);
+        status = Status.END_TURN;
+    }
+
+
     public Land getCurrent() {
         return current;
     }
@@ -149,9 +156,8 @@ public class Player {
         return waitTurn;
     }
 
-    public void selectGift(int i) {
-        current.getGift(i, this);
-        status = Status.END_TURN;
+    public int getFreeTurn() {
+        return freeTurn;
     }
 
     public int getPoints() {
