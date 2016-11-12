@@ -17,6 +17,7 @@ public class PlayerPassByBombTest {
     private Land bombPoint;
     private Land endPoint;
     private Land hospital;
+    private Player player;
 
     @Before
     public void setUp() throws Exception {
@@ -26,17 +27,23 @@ public class PlayerPassByBombTest {
         endPoint = mock(Land.class);
         hospital = mock(Hospital.class);
         map = GameMap.createGameMapWithBomb(1, startPoint, bombPoint, endPoint, hospital);
+        player = Player.createPlayerWithStart(1, map, dice, startPoint);
 
         when(dice.next()).thenReturn(2);
     }
 
     @Test
     public void should_end_turn_when_pass_by_bomb() throws Exception {
-        Player player = Player.createPlayerWithStart(1, map, dice, startPoint);
-
         player.roll();
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
         assertThat(player.getCurrent(), is(hospital));
+    }
+
+    @Test
+    public void should_stop_three_turn_when_pass_by_bomb() throws Exception {
+        player.roll();
+
+        assertThat(player.getWaitTurn(), is(3));
     }
 }

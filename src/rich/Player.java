@@ -176,6 +176,7 @@ public class Player {
     }
 
     public void goToHospital(){
+        waitTurn = 3;
         status = Status.END_TURN;
     }
 
