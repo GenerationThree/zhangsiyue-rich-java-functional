@@ -76,7 +76,8 @@ public class Player {
         if(current instanceof GiftHouse){
             status = Status.WAIT_RESPONSE;
         }
-
+        if(freeTurn > 0)
+            freeTurn --;
     }
 
     private void payFee(Player owner) {
@@ -86,7 +87,6 @@ public class Player {
                 balance -= fee;
                 owner.gain(fee);
             }else {
-                freeTurn --;
                 status = Status.END_GAME;
                 return;
             }

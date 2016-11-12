@@ -74,7 +74,7 @@ public class PlayerRollToGiftHouseTest {
     }
 
     @Test
-    public void should_get_five_free_turn_when_select_billiken_at_gift_house() throws Exception {
+    public void should_get_five_free_turn_when_select_free_fee_at_gift_house() throws Exception {
         giftHouse = new GiftHouse();
         map = new GameMap(startPoint, giftHouse);
         final int freeTurn = 0;
