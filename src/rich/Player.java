@@ -29,7 +29,7 @@ public class Player {
         return player;
     }
 
-    public static Player createPlayerWithBalance(int id, GameMap map, Dice dice, Land start, double balance){
+    public static Player createPlayerWithBalance(int id, GameMap map, Dice dice, Land start, double balance) {
         Player player = new Player(id, map, dice);
         player.current = start;
         player.balance = balance;
@@ -38,7 +38,7 @@ public class Player {
 
     public void roll() {
         current = map.move(current, dice.next());
-        if(current.getOwner() == null || current.getOwner() == this)
+        if (current.getOwner() == null || current.getOwner() == this)
             status = Status.WAIT_RESPONSE;
     }
 
@@ -47,16 +47,19 @@ public class Player {
     }
 
     public void sayNo() {
-        if(current.getOwner() == null || current.getOwner() == this)
+        if (current.getOwner() == null || current.getOwner() == this)
             status = Status.END_TURN;
     }
 
-    public void sayYes(){
-        buy();
+    public void sayYes() {
+        if (current.getOwner() == null)
+            buy();
+        else if (current.getOwner() == this)
+            promote();
         status = Status.END_TURN;
     }
 
-    public void buy(){
+    private void buy() {
         if (balance >= current.getPrice()) {
             balance -= current.getPrice();
             current.buy(this);
@@ -64,6 +67,14 @@ public class Player {
         }
     }
 
+    private void promote(){
+        balance -= current.getPrice();
+        current.promote();
+    }
+
+    public Land getCurrent() {
+        return current;
+    }
 
     public List<Land> getLands() {
         return lands;

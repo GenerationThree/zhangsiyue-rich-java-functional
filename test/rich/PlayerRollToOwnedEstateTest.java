@@ -17,6 +17,7 @@ public class PlayerRollToOwnedEstateTest {
     private static final double START_BALANCE = 10000;
     private static final double IN_BALANCE = 200;
     private static final double OUT_OF_BALANCE = 10001;
+    private static final Estate.Level PRE_LEVEL = Estate.Level.ZERO;
     private Player player;
 
     @Before
@@ -44,5 +45,17 @@ public class PlayerRollToOwnedEstateTest {
         player.sayNo();
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
+
+    @Test
+    public void should_promote_estate_when_say_yes_at_owned_estate() throws Exception {
+        Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, IN_BALANCE, PRE_LEVEL);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getCurrent().getLevel(), is(PRE_LEVEL.next()));
+        assertThat(player.getBalance(), is(START_BALANCE - IN_BALANCE));
     }
 }
