@@ -12,9 +12,10 @@ public class Player {
     private Status status;
     private double balance;
     private List<Land> lands;
+    private boolean free;
+    private int waitTurn;
     private Map map;
     private Dice dice;
-    private boolean free;
 
 
     public Player(int id, Map map, Dice dice) {
@@ -24,6 +25,7 @@ public class Player {
         status = Status.WAIT_COMMAND;
         lands = new ArrayList<>();
         free = false;
+        waitTurn = 0;
     }
 
     public static Player createPlayerWithStart(int id, Map map, Dice dice, Land start) {
@@ -58,6 +60,10 @@ public class Player {
         }
         if(current instanceof Block){
             status = Status.END_TURN;
+        }
+        if(current instanceof Prison){
+            status = Status.END_TURN;
+            waitTurn = 2;
         }
     }
 
@@ -121,6 +127,10 @@ public class Player {
 
     public double getBalance() {
         return balance;
+    }
+
+    public int getWaitTurn() {
+        return waitTurn;
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
