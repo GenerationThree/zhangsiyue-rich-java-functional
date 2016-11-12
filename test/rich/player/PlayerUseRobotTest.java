@@ -31,7 +31,7 @@ public class PlayerUseRobotTest {
         map = mock(Map.class);
         land = mock(Land.class);
         startPoint = mock(Land.class);
-        player = Player.createPlayerWithStart(1, map, dice, startPoint);
+        player = Player.createPlayerWithRobot(1, map, dice, startPoint);
     }
 
     @Test
@@ -46,14 +46,11 @@ public class PlayerUseRobotTest {
         Land blockPoint = mock(Land.class);
         Land endPoint = mock(Land.class);
         map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
-        player = Player.createPlayerWithStart(1, map, dice, startPoint);
+        player = Player.createPlayerWithRobot(1, map, dice, startPoint);
 
         assertThat(map.getTool(blockPoint), notNullValue());
         player.useRobot();
 
-        for (int i = 0 ; i < 10; i++){
-            Land current = map.move(startPoint, 1, player);
-            assertThat(map.getTool(current), is(nullValue()));
-        }
+        assertThat(map.getTool(blockPoint), is(nullValue()));
     }
 }

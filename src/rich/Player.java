@@ -59,6 +59,13 @@ public class Player {
         return player;
     }
 
+    public static Player createPlayerWithRobot(int id, Map map, Dice dice, Land start) {
+        Player player = new Player(id, map, dice);
+        player.current = start;
+        player.tools.add(new Tool(Tool.Type.ROBOT));
+        return player;
+    }
+
     public void roll() {
         current = map.move(current, dice.next(), this);
 
@@ -212,6 +219,7 @@ public class Player {
     }
 
     public void useRobot() {
+        map.removeToll(current);
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
