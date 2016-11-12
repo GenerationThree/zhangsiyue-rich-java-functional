@@ -57,4 +57,18 @@ public class MapTest {
         map.move(startPoint, 2, player);
         assertThat(map.getTool(bombPoint), is(nullValue()));
     }
+
+    @Test
+    public void should_remove_tool() throws Exception {
+        Land startPoint = mock(Land.class);
+        Land blockPoint = mock(Land.class);
+        Land endPoint = mock(Land.class);
+        Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
+
+        assertThat(gameMap.getTool(blockPoint), notNullValue());
+
+        gameMap.removeToll(startPoint);
+
+        assertThat(gameMap.getTool(blockPoint), is(nullValue()));
+    }
 }

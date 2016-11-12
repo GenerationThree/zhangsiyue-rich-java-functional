@@ -68,4 +68,15 @@ public class GameMap implements Map {
         Tool tool = (Tool) toolSetList.getOrDefault(currentPosition, null);
         return tool;
     }
+
+    @Override
+    public void removeToll(Land current) {
+        int currentIndex = landList.indexOf(current);
+        for (int i = 1; i <= 10; i++){
+            Land target = landList.get((currentIndex + i) % landList.size());
+            if(getTool(target)!= null){
+                toolSetList.remove(currentIndex + i);
+            }
+        }
+    }
 }
