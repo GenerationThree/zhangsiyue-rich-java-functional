@@ -8,4 +8,5 @@ public interface Land {
     double getPrice();
     Estate.Level getLevel();
     boolean promote();
+    void getGift(int choice, Player player);
 }

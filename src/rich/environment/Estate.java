@@ -1,5 +1,6 @@
 package rich.environment;
 
+import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 import rich.Player;
 
 public class Estate implements Land {
@@ -46,6 +47,11 @@ public class Estate implements Land {
         }
         return false;
 
+    }
+
+    @Override
+    public void getGift(int choice, Player player) {
+        throw new UnsupportedMediaException();
     }
 
     public enum Level {

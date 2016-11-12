@@ -85,8 +85,8 @@ public class Player {
         status = Status.END_TURN;
     }
 
-    private void gain(double fee) {
-        balance += fee;
+    public void gain(double sum) {
+        balance += sum;
     }
 
     public Status getStatus() {
@@ -138,6 +138,7 @@ public class Player {
     }
 
     public void selectGift(int i) {
+        current.getGift(i, this);
         status = Status.END_TURN;
     }
 
