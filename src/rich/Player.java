@@ -91,7 +91,9 @@ public class Player {
     }
 
     private void payFee(Player owner) {
-        if (freeTurn <= 0) {
+        if (freeTurn <= 0 &&
+                !(((Estate)current).getOwner().getCurrent() instanceof Hospital)&&
+                !(((Estate)current).getOwner().getCurrent() instanceof Prison)) {
             double fee = ((Estate)current).getPrice() * ((Estate)current).getLevel().getTimes();
             if (balance >= fee) {
                 balance -= fee;

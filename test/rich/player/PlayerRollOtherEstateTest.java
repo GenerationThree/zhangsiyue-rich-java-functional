@@ -3,10 +3,7 @@ package rich.player;
 import org.junit.Before;
 import org.junit.Test;
 import rich.*;
-import rich.environment.Dice;
-import rich.environment.Estate;
-import rich.environment.Land;
-import rich.environment.Map;
+import rich.environment.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -72,5 +69,29 @@ public class PlayerRollOtherEstateTest {
         player.roll();
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
+
+    @Test
+    public void should_not_pay_fee_when_owner_is_in_hospital_at_other_estate() throws Exception {
+        otherPlayer = mock(Player.class);
+        Land hospital = mock(Hospital.class);
+        when(otherPlayer.getCurrent()).thenReturn(hospital);
+        otherEstate = Estate.createEstateWithLevel(otherPlayer, ESTATE_PRICE, ESTATE_LEVEL);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(otherEstate);
+
+        player.roll();
+        assertThat(player.getBalance(), is(START_BALANCE));
+    }
+
+    @Test
+    public void should_not_pay_fee_when_owner_is_in_prison_at_other_estate() throws Exception {
+        otherPlayer = mock(Player.class);
+        Land prison = mock(Prison.class);
+        when(otherPlayer.getCurrent()).thenReturn(prison);
+        otherEstate = Estate.createEstateWithLevel(otherPlayer, ESTATE_PRICE, ESTATE_LEVEL);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(otherEstate);
+
+        player.roll();
+        assertThat(player.getBalance(), is(START_BALANCE));
     }
 }
