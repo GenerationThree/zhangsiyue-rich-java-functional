@@ -84,8 +84,10 @@ public class Player {
             else
                 status = Status.END_TURN;
         }
-        if(current instanceof Mine)
+        if(current instanceof Mine) {
+            points += ((Mine) current).getPoints();
             status = Status.END_TURN;
+        }
         if (freeTurn > 0)
             freeTurn--;
     }
