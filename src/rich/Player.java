@@ -77,8 +77,7 @@ public class Player {
             status = Status.WAIT_RESPONSE;
         }
         if(current instanceof TollHouse){
-            if (points < 30)
-                status = Status.END_TURN;
+            status = Status.WAIT_RESPONSE;
         }
         if(freeTurn > 0)
             freeTurn --;

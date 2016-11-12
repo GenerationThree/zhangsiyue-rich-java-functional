@@ -29,12 +29,11 @@ public class PlayerRollToTollHouseTest {
     }
 
     @Test
-    public void should_end_turn_when_roll_to_tool_house_without_enough_points() throws Exception {
+    public void should_wait_response_when_roll_to_tool_house() throws Exception {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
         player.roll();
 
-        assertThat(player.getStatus(), is(Player.Status.END_TURN));
-
+        assertThat(player.getStatus(), is(Player.Status.WAIT_RESPONSE));
     }
 }
