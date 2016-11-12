@@ -17,6 +17,7 @@ public class PlayerRollToGiftHouseTest {
     private Land giftHouse;
 
     private static final double START_BALANCE = 10000;
+    private static final int START_POINTS = 0;
 
     @Before
     public void setUp() throws Exception {
@@ -51,12 +52,24 @@ public class PlayerRollToGiftHouseTest {
     public void should_increase_balance_when_select_bonus_at_gift_house() throws Exception {
         giftHouse = new GiftHouse();
         map = new GameMap(startPoint, giftHouse);
-        Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
+        Player player = Player.createPlayerWithBalance(2, map, dice, startPoint, START_BALANCE);
 
         player.roll();
         player.selectGift(1);
 
-        assertThat(player.getBalance(), is(START_BALANCE + 2000));
+            assertThat(player.getBalance(), is(START_BALANCE + GiftHouse.BONUS));
 
+    }
+
+    @Test
+    public void should_increase_point_when_select_points_at_gift_house() throws Exception {
+        giftHouse = new GiftHouse();
+        map = new GameMap(startPoint, giftHouse);
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
+
+        player.roll();
+        player.selectGift(2);
+
+        assertThat(player.getPoints(), is(START_POINTS + GiftHouse.POINTS));
     }
 }

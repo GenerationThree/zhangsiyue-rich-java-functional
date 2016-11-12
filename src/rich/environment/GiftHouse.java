@@ -4,7 +4,8 @@ import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 import rich.Player;
 
 public class GiftHouse implements Land {
-    private static final double BONUS = 2000;
+    public static final double BONUS = 2000;
+    public static final int POINTS = 200;
 
     @Override
     public Player getOwner() {
@@ -38,6 +39,9 @@ public class GiftHouse implements Land {
         switch (choice){
             case 1:
                 player.gain(BONUS);
+                break;
+            case 2:
+                player.addPoint(POINTS);
                 break;
             default:
                 break;

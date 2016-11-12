@@ -16,6 +16,7 @@ public class Player {
     private int waitTurn;
     private Map map;
     private Dice dice;
+    private int points;
 
 
     public Player(int id, Map map, Dice dice) {
@@ -46,6 +47,13 @@ public class Player {
         player.current = start;
         player.balance = balance;
         player.free = true;
+        return player;
+    }
+
+    public static Player createPlayerWithPoint(int id, Map map, Dice dice, Land start, int points) {
+        Player player = new Player(id, map, dice);
+        player.current = start;
+        player.points = points;
         return player;
     }
 
@@ -121,6 +129,10 @@ public class Player {
         }
     }
 
+    public void addPoint(int points) {
+        this.points += points;
+    }
+
     public Land getCurrent() {
         return current;
     }
@@ -140,6 +152,10 @@ public class Player {
     public void selectGift(int i) {
         current.getGift(i, this);
         status = Status.END_TURN;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
