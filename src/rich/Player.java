@@ -151,12 +151,15 @@ public class Player {
         status = Status.END_TURN;
     }
 
-    public boolean buyTool(int choice){
+    public boolean buyTool(int choice) {
         Tool tool = current.getTool(choice);
-        if (tool != null){
-            tools.add(tool);
-            points -= tool.getPointPrice();
-            return true;
+        if (tool != null) {
+            int toolPointPrice = tool.getPointPrice();
+            if (points >= toolPointPrice) {
+                tools.add(tool);
+                points -= toolPointPrice;
+                return true;
+            }
         }
         return false;
     }

@@ -73,6 +73,19 @@ public class PlayerRollToTollHouseTest {
 
         assertThat(player.getPoints(), is(startPointSum));
         assertThat(player.getTools().size(), is(0));
+    }
 
+    @Test
+    public void should_not_buy_tool_without_enough_points_for_chosen_tool_at_tool_house() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        final int startPointSum = Tool.Type.BLOCK.getPointPrice() - 1;
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
+
+        player.roll();
+        player.buyTool(1);
+
+        assertThat(player.getPoints(), is(startPointSum));
+        assertThat(player.getTools().size(), is(0));
     }
 }
