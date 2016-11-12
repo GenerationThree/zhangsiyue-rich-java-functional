@@ -19,27 +19,22 @@ public class Estate implements Land {
         return estate;
     }
 
-    @Override
     public Player getOwner() {
         return owner;
     }
 
-    @Override
     public void buy(Player player) {
         owner = player;
     }
 
-    @Override
     public double getPrice() {
         return price;
     }
 
-    @Override
     public Level getLevel() {
         return level;
     }
 
-    @Override
     public boolean promote() {
         if (level.compareTo(Level.TOP) < 0) {
             level = level.next();
@@ -49,15 +44,6 @@ public class Estate implements Land {
 
     }
 
-    @Override
-    public void getGift(int choice, Player player) {
-        throw new UnsupportedMediaException();
-    }
-
-    @Override
-    public Tool getTool(int choice) {
-        throw new UnsupportedMediaException();
-    }
 
     public enum Level {
         ZERO {

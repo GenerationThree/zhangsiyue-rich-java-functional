@@ -62,10 +62,10 @@ public class Player {
     public void roll() {
         current = map.move(current, dice.next());
         if (current instanceof Estate) {
-            if (current.getOwner() == null || current.getOwner() == this)
+            if (((Estate)current).getOwner() == null || ((Estate)current).getOwner() == this)
                 status = Status.WAIT_RESPONSE;
-            else if (current.getOwner() != this) {
-                payFee(current.getOwner());
+            else if (((Estate)current).getOwner() != this) {
+                payFee(((Estate)current).getOwner());
             }
         }
         if (current instanceof Block) {
@@ -94,7 +94,7 @@ public class Player {
 
     private void payFee(Player owner) {
         if (freeTurn <= 0) {
-            double fee = current.getPrice() * current.getLevel().getTimes();
+            double fee = ((Estate)current).getPrice() * ((Estate)current).getLevel().getTimes();
             if (balance >= fee) {
                 balance -= fee;
                 owner.gain(fee);
@@ -115,30 +115,30 @@ public class Player {
     }
 
     public void sayNo() {
-        if (current.getOwner() == null || current.getOwner() == this)
+        if (((Estate)current).getOwner() == null || ((Estate)current).getOwner() == this)
             status = Status.END_TURN;
     }
 
     public void sayYes() {
-        if (current.getOwner() == null)
+        if (((Estate)current).getOwner() == null)
             buy();
-        else if (current.getOwner() == this)
+        else if (((Estate)current).getOwner() == this)
             promote();
         status = Status.END_TURN;
     }
 
     private void buy() {
-        if (balance >= current.getPrice()) {
-            balance -= current.getPrice();
-            current.buy(this);
+        if (balance >= ((Estate)current).getPrice()) {
+            balance -= ((Estate)current).getPrice();
+            ((Estate)current).buy(this);
             lands.add(current);
         }
     }
 
     private void promote() {
-        if (balance >= current.getPrice()) {
-            if (current.promote())
-                balance -= current.getPrice();
+        if (balance >= ((Estate)current).getPrice()) {
+            if (((Estate)current).promote())
+                balance -= ((Estate)current).getPrice();
         }
     }
 
@@ -151,7 +151,7 @@ public class Player {
     }
 
     public void selectGift(int i) {
-        current.getGift(i, this);
+        ((GiftHouse)current).getGift(i, this);
         status = Status.END_TURN;
     }
 
@@ -165,7 +165,7 @@ public class Player {
             status = Status.END_TURN;
             return;
         }
-        Tool tool = current.getTool(choiceStr[0] - '0');
+        Tool tool = ((TollHouse)current).getTool(choiceStr[0] - '0');
         if (tool != null) {
             int toolPointPrice = tool.getPointPrice();
             if (points >= toolPointPrice) {

@@ -8,34 +8,6 @@ public class GiftHouse implements Land {
     public static final int POINTS = 200;
     public static final int FREE_TURN = 5;
 
-    @Override
-    public Player getOwner() {
-        throw new UnsupportedMediaException();
-    }
-
-    @Override
-    public void buy(Player player) {
-        throw new UnsupportedMediaException();
-    }
-
-    @Override
-    public double getPrice() {
-        throw new UnsupportedMediaException();
-
-    }
-
-    @Override
-    public Estate.Level getLevel() {
-        throw new UnsupportedMediaException();
-
-    }
-
-    @Override
-    public boolean promote() {
-        throw new UnsupportedMediaException();
-    }
-
-    @Override
     public void getGift(int choice, Player player) {
         switch (choice){
             case 1:
@@ -50,10 +22,5 @@ public class GiftHouse implements Land {
             default:
                 break;
         }
-    }
-
-    @Override
-    public Tool getTool(int choice) {
-        throw new UnsupportedMediaException();
     }
 }

@@ -30,7 +30,7 @@ public class PlayerRollToEmptyTest {
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
         emptyLand = new Estate(null, IN_BALANCE);
-        when(emptyLand.getOwner()).thenReturn(null);
+        when(((Estate)emptyLand).getOwner()).thenReturn(null);
         when(dice.next()).thenReturn(1);
         when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLand);
     }

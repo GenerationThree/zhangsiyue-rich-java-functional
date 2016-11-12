@@ -60,7 +60,7 @@ public class PlayerRollToOwnedEstateTest {
         player.roll();
         player.sayYes();
 
-        assertThat(player.getCurrent().getLevel(), is(PRE_LEVEL.next()));
+        assertThat(((Estate)player.getCurrent()).getLevel(), is(PRE_LEVEL.next()));
         assertThat(player.getBalance(), is(START_BALANCE - IN_BALANCE));
     }
 
@@ -72,7 +72,7 @@ public class PlayerRollToOwnedEstateTest {
         player.roll();
         player.sayYes();
 
-        assertThat(player.getCurrent().getLevel(), is(PRE_LEVEL));
+        assertThat(((Estate)player.getCurrent()).getLevel(), is(PRE_LEVEL));
         assertThat(player.getBalance(), is(START_BALANCE));
     }
 
@@ -84,7 +84,7 @@ public class PlayerRollToOwnedEstateTest {
         player.roll();
         player.sayYes();
 
-        assertThat(player.getCurrent().getLevel(), is(TOP_LEVEL));
+        assertThat(((Estate)player.getCurrent()).getLevel(), is(TOP_LEVEL));
         assertThat(player.getBalance(), is(START_BALANCE));
     }
 
