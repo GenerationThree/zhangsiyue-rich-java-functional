@@ -76,6 +76,10 @@ public class Player {
         if(current instanceof GiftHouse){
             status = Status.WAIT_RESPONSE;
         }
+        if(current instanceof TollHouse){
+            if (points < 30)
+                status = Status.END_TURN;
+        }
         if(freeTurn > 0)
             freeTurn --;
     }
