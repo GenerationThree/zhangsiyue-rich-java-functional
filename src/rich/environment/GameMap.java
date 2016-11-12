@@ -1,5 +1,7 @@
 package rich.environment;
 
+import rich.Player;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,19 +25,38 @@ public class GameMap implements Map {
         return gameMap;
     }
 
+    public static GameMap createGameMapWithBomb( int position, Land... lands) {
+        GameMap gameMap =  new GameMap(lands);
+        gameMap.toolSetList.put(position, new Tool(Tool.Type.BOMB));
+        return gameMap;
+    }
+
 
     @Override
-    public Land move(Land start, int step) {
+    public Land move(Land start, int step, Player player) {
         Land current = start;
         int statIndex = landList.indexOf(start);
         for (int i = 1; i <= step; i++){
             current = landList.get((statIndex + i) % landList.size());
             Tool tool = getTool(current);
-            if(tool != null)
+            if(tool != null) {
                 if (tool.getType() == Tool.Type.BLOCK)
                     return current;
+                if (tool.getType() == Tool.Type.BOMB) {
+                    player.goToHospital();
+                    return getHospital();
+                }
+            }
         }
         return current;
+    }
+
+    private Land getHospital() {
+        for (Land land : landList){
+            if(land instanceof Hospital)
+                return land;
+        }
+        return null;
     }
 
     @Override

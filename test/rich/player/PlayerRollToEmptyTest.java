@@ -10,6 +10,7 @@ import rich.environment.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -32,7 +33,7 @@ public class PlayerRollToEmptyTest {
         emptyLand = new Estate(null, IN_BALANCE);
         when(((Estate)emptyLand).getOwner()).thenReturn(null);
         when(dice.next()).thenReturn(1);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLand);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(emptyLand);
     }
 
     @Test
@@ -58,7 +59,7 @@ public class PlayerRollToEmptyTest {
     public void should_buy_estate_when_say_yes_at_empty() throws Exception {
         Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
         Land emptyLandWithPrice = new Estate(null, IN_BALANCE);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(emptyLandWithPrice);
         player.roll();
         player.sayYes();
 
@@ -70,7 +71,7 @@ public class PlayerRollToEmptyTest {
     public void should_not_buy_estate_without_enough_balance_when_say_yes_at_empty() throws Exception {
         Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
         Land emptyLandWithPrice = new Estate(null, OUT_OF_BALANCE);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(emptyLandWithPrice);
         player.roll();
         player.sayYes();
 
@@ -83,7 +84,7 @@ public class PlayerRollToEmptyTest {
     public void should_end_turn_after_say_yes_at_empty() throws Exception {
         Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
         Land emptyLandWithPrice = new Estate(null, IN_BALANCE);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(emptyLandWithPrice);
         player.roll();
         player.sayYes();
 

@@ -60,7 +60,7 @@ public class Player {
     }
 
     public void roll() {
-        current = map.move(current, dice.next());
+        current = map.move(current, dice.next(), this);
 
         if (current instanceof Estate) {
             if (((Estate)current).getOwner() == null || ((Estate)current).getOwner() == this)
@@ -173,6 +173,10 @@ public class Player {
         }
         if(points < TollHouse.LOW_LIMIT)
             status = Status.END_TURN;
+    }
+
+    public void goToHospital(){
+        status = Status.END_TURN;
     }
 
     public Land getCurrent() {

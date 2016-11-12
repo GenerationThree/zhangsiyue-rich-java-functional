@@ -10,6 +10,7 @@ import rich.environment.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,7 +35,7 @@ public class PlayerRollToOwnedEstateTest {
         player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
         ownedEstate = new Estate(player, IN_BALANCE);
         when(dice.next()).thenReturn(1);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstate);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(ownedEstate);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class PlayerRollToOwnedEstateTest {
     @Test
     public void should_promote_estate_when_say_yes_at_owned_estate() throws Exception {
         Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, IN_BALANCE, PRE_LEVEL);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(ownedEstateWithLevel);
 
         player.roll();
         player.sayYes();
@@ -67,7 +68,7 @@ public class PlayerRollToOwnedEstateTest {
     @Test
     public void should_not_promote_estate_without_enough_money_when_say_yes_at_owned_estate() throws Exception {
         Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, OUT_OF_BALANCE, PRE_LEVEL);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(ownedEstateWithLevel);
 
         player.roll();
         player.sayYes();
@@ -79,7 +80,7 @@ public class PlayerRollToOwnedEstateTest {
     @Test
     public void should_not_promote_top_estate_when_say_yes_at_owned_estate() throws Exception {
         Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, OUT_OF_BALANCE, TOP_LEVEL);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(ownedEstateWithLevel);
 
         player.roll();
         player.sayYes();
@@ -91,7 +92,7 @@ public class PlayerRollToOwnedEstateTest {
     @Test
     public void should_end_turn_after_say_yes_at_empty_land() throws Exception {
         Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, OUT_OF_BALANCE, PRE_LEVEL);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(ownedEstateWithLevel);
 
         player.roll();
         player.sayYes();

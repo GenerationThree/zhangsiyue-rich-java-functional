@@ -1,6 +1,7 @@
 package rich.environment;
 
 import org.junit.Test;
+import rich.Player;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -12,9 +13,10 @@ public class MapTest {
         Land startPoint = mock(Land.class);
         Land passByPoint = mock(Land.class);
         Land endPoint = mock(Land.class);
+        Player player = mock(Player.class);
         Map map = new GameMap(startPoint, passByPoint, endPoint);
 
-        assertThat(map.move(startPoint, 2), is(endPoint));
+        assertThat(map.move(startPoint, 2, player), is(endPoint));
     }
 
     @Test
@@ -22,8 +24,9 @@ public class MapTest {
         Land startPoint = mock(Land.class);
         Land blockPoint = mock(Land.class);
         Land endPoint = mock(Land.class);
+        Player player = mock(Player.class);
         Map map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
 
-        assertThat(map.move(startPoint, 2), is(blockPoint));
+        assertThat(map.move(startPoint, 2, player), is(blockPoint));
     }
 }

@@ -10,6 +10,7 @@ import rich.environment.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -38,7 +39,7 @@ public class PlayerRollOtherEstateTest {
         fee = ESTATE_PRICE * ESTATE_LEVEL.getTimes();
 
         when(dice.next()).thenReturn(1);
-        when(map.move(eq(startPoint), eq(1))).thenReturn(otherEstate);
+        when(map.move(eq(startPoint), eq(1), any())).thenReturn(otherEstate);
     }
 
     @Test
