@@ -134,6 +134,10 @@ public class Player {
         this.points += points;
     }
 
+    public void haveFreeTurn(int freeTurn){
+        this.freeTurn = freeTurn;
+    }
+
     public void selectGift(int i) {
         current.getGift(i, this);
         status = Status.END_TURN;
