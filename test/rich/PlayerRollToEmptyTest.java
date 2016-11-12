@@ -16,6 +16,9 @@ public class PlayerRollToEmptyTest {
     private Dice dice;
     private Land startPoint;
     private Land emptyLand;
+    private static final double START_BALANCE = 10000;
+    private static final double IN_BALANCE = 200;
+    private static final double OUT_OF_BALANCE = 10001;
 
     @Before
     public void setUp() throws Exception {
@@ -46,4 +49,30 @@ public class PlayerRollToEmptyTest {
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
     }
+
+    @Test
+    public void should_buy_estate_when_say_yes_at_empty() throws Exception {
+        Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
+        Land emptyLandWithPrice = new Estate(null, IN_BALANCE);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getLands().size(), is(1));
+        assertThat(player.getBalance(), is(START_BALANCE - IN_BALANCE));
+    }
+
+    @Test
+    public void should_not_buy_estate_without_enough_balance_when_say_yes_at_empty() throws Exception {
+        Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
+        Land emptyLandWithPrice = new Estate(null, OUT_OF_BALANCE);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getLands().size(), is(0));
+        assertThat(player.getBalance(), is(START_BALANCE));
+
+    }
+
 }
