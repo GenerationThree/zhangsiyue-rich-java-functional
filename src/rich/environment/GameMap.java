@@ -40,9 +40,12 @@ public class GameMap implements Map {
             current = landList.get((statIndex + i) % landList.size());
             Tool tool = getTool(current);
             if(tool != null) {
-                if (tool.getType() == Tool.Type.BLOCK)
+                if (tool.getType() == Tool.Type.BLOCK) {
+                    toolSetList.remove(statIndex + i);
                     return current;
+                }
                 if (tool.getType() == Tool.Type.BOMB) {
+                    toolSetList.remove(statIndex + i);
                     player.goToHospital();
                     return getHospital();
                 }
