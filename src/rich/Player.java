@@ -160,6 +160,8 @@ public class Player {
                 points -= toolPointPrice;
             }
         }
+        if(points < TollHouse.LOW_LIMIT)
+            status = Status.END_TURN;
     }
 
     public Land getCurrent() {
