@@ -52,11 +52,21 @@ public class Estate implements Land {
             public Level next() {
                 return ONE;
             }
+
+            @Override
+            public double getTimes() {
+                return 0.5;
+            }
         },
         ONE {
             @Override
             public Level next() {
                 return TWO;
+            }
+
+            @Override
+            public double getTimes() {
+                return 1;
             }
         },
         TWO {
@@ -64,15 +74,27 @@ public class Estate implements Land {
             public Level next() {
                 return TOP;
             }
+
+            @Override
+            public double getTimes() {
+                return 2;
+            }
         },
         TOP {
             @Override
             public Level next() {
                 return null;
             }
+
+            @Override
+            public double getTimes() {
+                return 4;
+            }
         };
 
         public abstract Level next();
+
+        public abstract double getTimes();
     }
 
 }

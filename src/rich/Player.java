@@ -9,18 +9,19 @@ public class Player {
     private Land current;
     private Status status;
     private double balance;
-
     private List<Land> lands;
     private GameMap map;
     private Dice dice;
+    private boolean free;
 
 
-    private Player(int id, GameMap map, Dice dice) {
+    public Player(int id, GameMap map, Dice dice) {
         this.id = id;
         this.map = map;
         this.dice = dice;
         status = Status.WAIT_COMMAND;
-        this.lands = new ArrayList<>();
+        lands = new ArrayList<>();
+        free = false;
     }
 
     public static Player createPlayerWithStart(int id, GameMap map, Dice dice, Land start) {
@@ -36,10 +37,33 @@ public class Player {
         return player;
     }
 
+    public static Player createPlayerFreeForFee(int id, GameMap map, Dice dice, Land start, double balance) {
+        Player player = new Player(id, map, dice);
+        player.current = start;
+        player.balance = balance;
+        player.free = true;
+        return player;
+    }
+
     public void roll() {
         current = map.move(current, dice.next());
         if (current.getOwner() == null || current.getOwner() == this)
             status = Status.WAIT_RESPONSE;
+        else if(current.getOwner() != this){
+            payFee(current.getOwner());
+        }
+    }
+
+    private void payFee(Player owner) {
+        if (!free) {
+            double fee = current.getPrice() * current.getLevel().getTimes();
+            balance -= fee;
+            owner.gain(fee);
+        }
+    }
+
+    private void gain(double fee) {
+        balance += fee;
     }
 
     public Status getStatus() {
