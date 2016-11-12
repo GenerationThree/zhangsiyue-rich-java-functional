@@ -69,9 +69,6 @@ public class Player {
                 payFee(((Estate)current).getOwner());
             }
         }
-        if (current instanceof Block) {
-            status = Status.END_TURN;
-        }
         if (current instanceof Prison) {
             status = Status.END_TURN;
             waitTurn = 2;
