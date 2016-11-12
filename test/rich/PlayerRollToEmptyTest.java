@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 
 public class PlayerRollToEmptyTest {
 
-
     private GameMap map;
     private Dice dice;
     private Land startPoint;

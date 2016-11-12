@@ -38,7 +38,7 @@ public class Player {
 
     public void roll() {
         current = map.move(current, dice.next());
-        if(current.getOwner() == null);
+        if(current.getOwner() == null || current.getOwner() == this)
             status = Status.WAIT_RESPONSE;
     }
 
