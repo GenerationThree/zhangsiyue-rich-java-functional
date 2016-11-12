@@ -75,4 +75,14 @@ public class PlayerRollToEmptyTest {
 
     }
 
+    @Test
+    public void should_end_turn_after_say_yes_at_empty() throws Exception {
+        Player player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
+        Land emptyLandWithPrice = new Estate(null, IN_BALANCE);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLandWithPrice);
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
 }

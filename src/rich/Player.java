@@ -53,6 +53,7 @@ public class Player {
 
     public void sayYes(){
         buy();
+        status = Status.END_TURN;
     }
 
     public void buy(){
