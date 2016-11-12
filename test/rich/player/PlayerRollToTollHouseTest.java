@@ -61,5 +61,18 @@ public class PlayerRollToTollHouseTest {
         assertThat(player.getTools().size(), is(1));
     }
 
+    @Test
+    public void should_not_buy_tool_when_make_invalid_choice() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        final int startPointSum = Tool.Type.BLOCK.getPointPrice();
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
 
+        player.roll();
+        player.buyTool(4);
+
+        assertThat(player.getPoints(), is(startPointSum));
+        assertThat(player.getTools().size(), is(0));
+
+    }
 }
