@@ -65,6 +65,10 @@ public class Player {
             status = Status.END_TURN;
             waitTurn = 2;
         }
+        if(current instanceof GiftHouse){
+            status = Status.WAIT_RESPONSE;
+        }
+
     }
 
     private void payFee(Player owner) {
