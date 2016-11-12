@@ -58,4 +58,16 @@ public class PlayerRollToOwnedEstateTest {
         assertThat(player.getCurrent().getLevel(), is(PRE_LEVEL.next()));
         assertThat(player.getBalance(), is(START_BALANCE - IN_BALANCE));
     }
+
+    @Test
+    public void should_not_promote_estate_without_enough_money_when_say_yes_at_owned_estate() throws Exception {
+        Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, OUT_OF_BALANCE, PRE_LEVEL);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getCurrent().getLevel(), is(PRE_LEVEL));
+        assertThat(player.getBalance(), is(START_BALANCE));
+    }
 }

@@ -68,8 +68,10 @@ public class Player {
     }
 
     private void promote(){
-        balance -= current.getPrice();
-        current.promote();
+        if (balance >= current.getPrice()) {
+            balance -= current.getPrice();
+            current.promote();
+        }
     }
 
     public Land getCurrent() {
