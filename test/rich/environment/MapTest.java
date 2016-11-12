@@ -20,10 +20,10 @@ public class MapTest {
     @Test
     public void should_stop_at_block_when_pass_by_block() throws Exception {
         Land startPoint = mock(Land.class);
-        Land block = new Block();
+        Land blockPoint = mock(Land.class);
         Land endPoint = mock(Land.class);
-        Map map = new GameMap(startPoint, block, endPoint);
+        Map map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
 
-        assertThat(map.move(startPoint, 2), is(block));
+        assertThat(map.move(startPoint, 2), is(blockPoint));
     }
 }

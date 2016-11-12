@@ -14,27 +14,26 @@ public class PlayerPassByBlockTest {
     private Map map;
     private Dice dice;
     private Land startPoint;
-    private Block block;
+    private Land blockPoint;
     private Land endPoint;
 
     @Before
     public void setUp() throws Exception {
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
-        block = new Block();
+        blockPoint = mock(Land.class);
         endPoint = mock(Land.class);
 
         when(dice.next()).thenReturn(2);
     }
 
     @Test
-    public void should_end_turn_when_pass_by_block() throws Exception {
-        map = new GameMap(startPoint, block, endPoint);
+    public void should_stop_when_pass_by_block() throws Exception {
+        map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
         Player player = Player.createPlayerWithStart(1, map, dice, startPoint);
 
         player.roll();
 
-        assertThat(player.getStatus(), is(Player.Status.END_TURN));
-        assertThat(player.getCurrent(), is(block));
+        assertThat(player.getCurrent(), is(blockPoint));
     }
 }

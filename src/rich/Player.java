@@ -61,6 +61,7 @@ public class Player {
 
     public void roll() {
         current = map.move(current, dice.next());
+
         if (current instanceof Estate) {
             if (((Estate)current).getOwner() == null || ((Estate)current).getOwner() == this)
                 status = Status.WAIT_RESPONSE;
