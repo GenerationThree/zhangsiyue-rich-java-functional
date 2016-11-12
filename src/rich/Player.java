@@ -47,7 +47,7 @@ public class Player {
     }
 
     public void sayNo() {
-        if(current.getOwner() == null);
+        if(current.getOwner() == null || current.getOwner() == this)
             status = Status.END_TURN;
     }
 

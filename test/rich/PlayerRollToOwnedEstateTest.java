@@ -37,4 +37,12 @@ public class PlayerRollToOwnedEstateTest {
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_RESPONSE));
     }
+
+    @Test
+    public void should_end_turn_when_say_no_at_owned_estate() throws Exception {
+        player.roll();
+        player.sayNo();
+
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
 }
