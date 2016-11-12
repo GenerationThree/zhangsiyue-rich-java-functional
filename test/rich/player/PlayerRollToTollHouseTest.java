@@ -88,4 +88,17 @@ public class PlayerRollToTollHouseTest {
         assertThat(player.getPoints(), is(startPointSum));
         assertThat(player.getTools().size(), is(0));
     }
+
+    @Test
+    public void should_wait_response_after_buy_tool_at_tool_house() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        final int startPointSum = Tool.Type.BLOCK.getPointPrice();
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
+
+        player.roll();
+        player.buyTool(1);
+
+        assertThat(player.getStatus(), is(Player.Status.WAIT_RESPONSE));
+    }
 }
