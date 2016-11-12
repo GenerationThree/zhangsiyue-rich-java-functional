@@ -67,10 +67,10 @@ public class Player {
         }
     }
 
-    private void promote(){
+    private void promote() {
         if (balance >= current.getPrice()) {
-            balance -= current.getPrice();
-            current.promote();
+            if (current.promote())
+                balance -= current.getPrice();
         }
     }
 

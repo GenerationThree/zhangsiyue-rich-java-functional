@@ -5,5 +5,5 @@ public interface Land {
     void buy(Player player);
     double getPrice();
     Estate.Level getLevel();
-    void promote();
+    boolean promote();
 }

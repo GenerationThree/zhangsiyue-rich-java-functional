@@ -37,8 +37,13 @@ public class Estate implements Land {
     }
 
     @Override
-    public void promote() {
-        level = level.next();
+    public boolean promote() {
+        if (level.compareTo(Level.TOP) < 0) {
+            level = level.next();
+            return true;
+        }
+        return false;
+
     }
 
     public enum Level {
