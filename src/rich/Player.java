@@ -57,8 +57,12 @@ public class Player {
     private void payFee(Player owner) {
         if (!free) {
             double fee = current.getPrice() * current.getLevel().getTimes();
-            balance -= fee;
-            owner.gain(fee);
+            if (balance >= fee) {
+                balance -= fee;
+                owner.gain(fee);
+            }else {
+                status = Status.END_GAME;
+            }
         }
     }
 
@@ -110,5 +114,5 @@ public class Player {
         return balance;
     }
 
-    public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN,}
+    public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }
