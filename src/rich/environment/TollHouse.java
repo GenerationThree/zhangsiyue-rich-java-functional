@@ -4,6 +4,7 @@ import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 import rich.Player;
 
 public class TollHouse implements Land {
+    public static final int LOW_LIMIT = 30;
     @Override
     public Player getOwner() {
         throw new UnsupportedMediaException();

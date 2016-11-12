@@ -66,21 +66,24 @@ public class Player {
                 payFee(current.getOwner());
             }
         }
-        if(current instanceof Block){
+        if (current instanceof Block) {
             status = Status.END_TURN;
         }
-        if(current instanceof Prison){
+        if (current instanceof Prison) {
             status = Status.END_TURN;
             waitTurn = 2;
         }
-        if(current instanceof GiftHouse){
+        if (current instanceof GiftHouse) {
             status = Status.WAIT_RESPONSE;
         }
-        if(current instanceof TollHouse){
-            status = Status.WAIT_RESPONSE;
+        if (current instanceof TollHouse) {
+            if (points >= TollHouse.LOW_LIMIT)
+                status = Status.WAIT_RESPONSE;
+            else
+                status = Status.END_TURN;
         }
-        if(freeTurn > 0)
-            freeTurn --;
+        if (freeTurn > 0)
+            freeTurn--;
     }
 
     private void payFee(Player owner) {
@@ -89,7 +92,7 @@ public class Player {
             if (balance >= fee) {
                 balance -= fee;
                 owner.gain(fee);
-            }else {
+            } else {
                 status = Status.END_GAME;
                 return;
             }
@@ -137,7 +140,7 @@ public class Player {
         this.points += points;
     }
 
-    public void haveFreeTurn(int freeTurn){
+    public void haveFreeTurn(int freeTurn) {
         this.freeTurn = freeTurn;
     }
 
