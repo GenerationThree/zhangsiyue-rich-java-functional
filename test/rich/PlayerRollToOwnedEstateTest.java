@@ -83,4 +83,15 @@ public class PlayerRollToOwnedEstateTest {
         assertThat(player.getCurrent().getLevel(), is(TOP_LEVEL));
         assertThat(player.getBalance(), is(START_BALANCE));
     }
+
+    @Test
+    public void should_end_turn_after_say_yes_at_empty_land() throws Exception {
+        Estate ownedEstateWithLevel = Estate.createEstateWithLevel(player, OUT_OF_BALANCE, PRE_LEVEL);
+        when(map.move(eq(startPoint), eq(1))).thenReturn(ownedEstateWithLevel);
+
+        player.roll();
+        player.sayYes();
+
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
 }
