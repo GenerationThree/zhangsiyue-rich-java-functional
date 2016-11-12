@@ -1,7 +1,12 @@
-package rich;
+package rich.player;
 
 import org.junit.Before;
 import org.junit.Test;
+import rich.*;
+import rich.environment.Dice;
+import rich.environment.Estate;
+import rich.environment.Land;
+import rich.environment.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -11,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class PlayerRollToEmptyTest {
 
-    private GameMap map;
+    private Map map;
     private Dice dice;
     private Land startPoint;
     private Land emptyLand;
@@ -21,10 +26,10 @@ public class PlayerRollToEmptyTest {
 
     @Before
     public void setUp() throws Exception {
-        map = mock(GameMap.class);
+        map = mock(Map.class);
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
-        emptyLand = mock(Land.class);
+        emptyLand = new Estate(null, IN_BALANCE);
         when(emptyLand.getOwner()).thenReturn(null);
         when(dice.next()).thenReturn(1);
         when(map.move(eq(startPoint), eq(1))).thenReturn(emptyLand);

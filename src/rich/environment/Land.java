@@ -1,4 +1,6 @@
-package rich;
+package rich.environment;
+
+import rich.Player;
 
 public interface Land {
     Player getOwner();

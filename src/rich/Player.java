@@ -1,5 +1,7 @@
 package rich;
 
+import rich.environment.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +12,12 @@ public class Player {
     private Status status;
     private double balance;
     private List<Land> lands;
-    private GameMap map;
+    private Map map;
     private Dice dice;
     private boolean free;
 
 
-    public Player(int id, GameMap map, Dice dice) {
+    public Player(int id, Map map, Dice dice) {
         this.id = id;
         this.map = map;
         this.dice = dice;
@@ -24,20 +26,20 @@ public class Player {
         free = false;
     }
 
-    public static Player createPlayerWithStart(int id, GameMap map, Dice dice, Land start) {
+    public static Player createPlayerWithStart(int id, Map map, Dice dice, Land start) {
         Player player = new Player(id, map, dice);
         player.current = start;
         return player;
     }
 
-    public static Player createPlayerWithBalance(int id, GameMap map, Dice dice, Land start, double balance) {
+    public static Player createPlayerWithBalance(int id, Map map, Dice dice, Land start, double balance) {
         Player player = new Player(id, map, dice);
         player.current = start;
         player.balance = balance;
         return player;
     }
 
-    public static Player createPlayerFreeForFee(int id, GameMap map, Dice dice, Land start, double balance) {
+    public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance) {
         Player player = new Player(id, map, dice);
         player.current = start;
         player.balance = balance;
@@ -47,10 +49,15 @@ public class Player {
 
     public void roll() {
         current = map.move(current, dice.next());
-        if (current.getOwner() == null || current.getOwner() == this)
-            status = Status.WAIT_RESPONSE;
-        else if(current.getOwner() != this){
-            payFee(current.getOwner());
+        if (current instanceof Estate) {
+            if (current.getOwner() == null || current.getOwner() == this)
+                status = Status.WAIT_RESPONSE;
+            else if (current.getOwner() != this) {
+                payFee(current.getOwner());
+            }
+        }
+        if(current instanceof Block){
+            status = Status.END_TURN;
         }
     }
 
@@ -62,8 +69,10 @@ public class Player {
                 owner.gain(fee);
             }else {
                 status = Status.END_GAME;
+                return;
             }
         }
+        status = Status.END_TURN;
     }
 
     private void gain(double fee) {

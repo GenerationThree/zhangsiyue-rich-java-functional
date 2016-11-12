@@ -1,4 +1,6 @@
-package rich;
+package rich.environment;
+
+import rich.Player;
 
 public class Estate implements Land {
     private Player owner;
