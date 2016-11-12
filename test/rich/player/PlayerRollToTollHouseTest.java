@@ -54,7 +54,7 @@ public class PlayerRollToTollHouseTest {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
         player.roll();
-        player.buyTool(1);
+        player.buyTool("1");
 
         assertThat(player.getPoints(), is(START_POINTS - Tool.Type.BLOCK.getPointPrice()));
         assertThat(player.getTools().size(), is(1));
@@ -67,7 +67,7 @@ public class PlayerRollToTollHouseTest {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
         player.roll();
-        player.buyTool(4);
+        player.buyTool("4");
 
         assertThat(player.getPoints(), is(START_POINTS));
         assertThat(player.getTools().size(), is(0));
@@ -81,7 +81,7 @@ public class PlayerRollToTollHouseTest {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
 
         player.roll();
-        player.buyTool(1);
+        player.buyTool("1");
 
         assertThat(player.getPoints(), is(startPointSum));
         assertThat(player.getTools().size(), is(0));
@@ -94,7 +94,7 @@ public class PlayerRollToTollHouseTest {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
         player.roll();
-        player.buyTool(1);
+        player.buyTool("1");
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_RESPONSE));
     }
@@ -107,7 +107,19 @@ public class PlayerRollToTollHouseTest {
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
 
         player.roll();
-        player.buyTool(1);
+        player.buyTool("1");
+
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
+    }
+
+    @Test
+    public void should_end_turn_when_choose_quit_tool_house() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
+
+        player.roll();
+        player.buyTool("F");
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
 

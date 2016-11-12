@@ -151,8 +151,17 @@ public class Player {
         status = Status.END_TURN;
     }
 
-    public void buyTool(int choice) {
-        Tool tool = current.getTool(choice);
+    public void buyTool(String response) {
+        char[] choiceStr = response.toCharArray();
+        if (choiceStr.length > 1)
+            return;
+        if((choiceStr[0] < '1' || choiceStr[0] > '9') && choiceStr[0] != 'F' )
+            return;
+        if (choiceStr[0] == 'F'){
+            status = Status.END_TURN;
+            return;
+        }
+        Tool tool = current.getTool(choiceStr[0] - '0');
         if (tool != null) {
             int toolPointPrice = tool.getPointPrice();
             if (points >= toolPointPrice) {
