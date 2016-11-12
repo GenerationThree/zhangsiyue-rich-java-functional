@@ -137,5 +137,9 @@ public class Player {
         return waitTurn;
     }
 
+    public void selectGift(int i) {
+        status = Status.END_TURN;
+    }
+
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }

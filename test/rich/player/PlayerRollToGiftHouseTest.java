@@ -20,13 +20,12 @@ public class PlayerRollToGiftHouseTest {
     public void setUp() throws Exception {
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
-        giftHouse = new GiftHouse();
+        giftHouse = mock(GiftHouse.class);
         map = new GameMap(startPoint, giftHouse);
 
         when(dice.next()).thenReturn(1);
     }
-
-
+    
     @Test
     public void should_wait_response_when_roll_to_gift_house() throws Exception {
         Player player = Player.createPlayerWithStart(1, map, dice, startPoint);
@@ -34,6 +33,15 @@ public class PlayerRollToGiftHouseTest {
         player.roll();
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_RESPONSE));
+    }
 
+    @Test
+    public void should_end_turn_after_select_gift() throws Exception {
+        Player player = Player.createPlayerWithStart(1, map, dice, startPoint);
+
+        player.roll();
+        player.selectGift(1);
+
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
     }
 }
