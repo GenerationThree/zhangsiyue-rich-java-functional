@@ -51,4 +51,9 @@ public class GiftHouse implements Land {
                 break;
         }
     }
+
+    @Override
+    public Tool getTool(int choice) {
+        throw new UnsupportedMediaException();
+    }
 }

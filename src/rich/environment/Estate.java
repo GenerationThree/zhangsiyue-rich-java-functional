@@ -54,6 +54,11 @@ public class Estate implements Land {
         throw new UnsupportedMediaException();
     }
 
+    @Override
+    public Tool getTool(int choice) {
+        throw new UnsupportedMediaException();
+    }
+
     public enum Level {
         ZERO {
             @Override

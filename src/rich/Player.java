@@ -12,6 +12,7 @@ public class Player {
     private Status status;
     private double balance;
     private List<Land> lands;
+    private List<Tool> tools;
     private int freeTurn;
     private int waitTurn;
     private Map map;
@@ -25,6 +26,7 @@ public class Player {
         this.dice = dice;
         status = Status.WAIT_COMMAND;
         lands = new ArrayList<>();
+        tools = new ArrayList<>();
         freeTurn = 0;
         waitTurn = 0;
     }
@@ -149,6 +151,15 @@ public class Player {
         status = Status.END_TURN;
     }
 
+    public boolean buyTool(int choice){
+        Tool tool = current.getTool(choice);
+        if (tool != null){
+            tools.add(tool);
+            points -= tool.getPointPrice();
+            return true;
+        }
+        return false;
+    }
 
     public Land getCurrent() {
         return current;
@@ -172,6 +183,11 @@ public class Player {
 
     public int getPoints() {
         return points;
+    }
+
+
+    public List<Tool> getTools() {
+        return tools;
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}

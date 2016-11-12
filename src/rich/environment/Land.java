@@ -9,4 +9,5 @@ public interface Land {
     Estate.Level getLevel();
     boolean promote();
     void getGift(int choice, Player player);
+    Tool getTool(int choice);
 }

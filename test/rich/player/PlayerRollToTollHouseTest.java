@@ -46,4 +46,20 @@ public class PlayerRollToTollHouseTest {
 
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
     }
+
+    @Test
+    public void should_add_tool_after_buy_tool_at_tool_house() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        final int startPointSum = Tool.Type.BLOCK.getPointPrice();
+        Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
+
+        player.roll();
+        player.buyTool(1);
+
+        assertThat(player.getPoints(), is(startPointSum - Tool.Type.BLOCK.getPointPrice()));
+        assertThat(player.getTools().size(), is(1));
+    }
+
+
 }

@@ -36,4 +36,9 @@ public class Prison implements Land {
     public void getGift(int choice, Player player) {
         throw new UnsupportedMediaException();
     }
+
+    @Override
+    public Tool getTool(int choice) {
+        throw new UnsupportedMediaException();
+    }
 }
