@@ -24,13 +24,19 @@ public class Player {
 
     public void roll() {
         current = map.move(current, dice.next());
-        status = Status.WAIT_RESPONSE;
+        if(current.getOwner() == null);
+            status = Status.WAIT_RESPONSE;
     }
 
     public Status getStatus() {
         return status;
     }
 
+    public void sayNo() {
+        if(current.getOwner() == null);
+            status = Status.END_TURN;
+    }
 
-    public enum Status {WAIT_COMMAND, WAIT_RESPONSE}
+
+    public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN,}
 }
