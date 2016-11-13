@@ -7,17 +7,12 @@ import rich.environment.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class PlayerSellToolTest {
     private Map map;
     private Dice dice;
     private Land startPoint;
-    private static final double START_POINTS = 100;
 
     @Before
     public void setUp() throws Exception {
@@ -28,7 +23,7 @@ public class PlayerSellToolTest {
 
     @Test
     public void should_wait_command_when_sell_tool() throws Exception {
-        Player player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        Player player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
 
         player.sellTool(Tool.Type.ROBOT);
 
@@ -37,7 +32,7 @@ public class PlayerSellToolTest {
 
     @Test
     public void should_decrease_tool_and_increase_points_when_sell_tool() throws Exception {
-        Player player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        Player player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
         int preToolSum = player.getTools().size();
         int prePoints = player.getPoints();
         player.sellTool(Tool.Type.ROBOT);
@@ -48,7 +43,7 @@ public class PlayerSellToolTest {
 
     @Test
     public void should_not_sell_not_owned_tool() throws Exception {
-        Player player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        Player player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
         int preToolSum = player.getTools().size();
         int prePoints = player.getPoints();
         player.sellTool(Tool.Type.BLOCK);

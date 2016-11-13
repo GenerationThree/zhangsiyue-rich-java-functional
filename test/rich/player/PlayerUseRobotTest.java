@@ -2,12 +2,8 @@ package rich.player;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import rich.Player;
-import rich.environment.Dice;
-import rich.environment.GameMap;
-import rich.environment.Land;
-import rich.environment.Map;
+import rich.environment.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -28,7 +24,7 @@ public class PlayerUseRobotTest {
         map = mock(Map.class);
         land = mock(Land.class);
         startPoint = mock(Land.class);
-        player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
     }
 
     @Test
@@ -43,7 +39,7 @@ public class PlayerUseRobotTest {
         Land blockPoint = mock(Land.class);
         Land endPoint = mock(Land.class);
         map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
-        player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
 
         assertThat(map.getTool(blockPoint), notNullValue());
         player.useRobot();

@@ -69,10 +69,10 @@ public class Player {
         return player;
     }
 
-    public static Player createPlayerWithRobot(int id, Map map, Dice dice, Land start) {
+    public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool tool) {
         Player player = new Player(id, map, dice);
         player.current = start;
-        player.tools.add(new Tool(Tool.Type.ROBOT));
+        player.tools.add(tool);
         return player;
     }
 
