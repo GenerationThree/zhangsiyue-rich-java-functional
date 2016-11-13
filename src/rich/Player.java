@@ -249,5 +249,16 @@ public class Player {
         return false;
     }
 
+    public boolean sellTool(Tool.Type type) {
+        for(Tool tool : tools){
+            if(tool.getType() == type){
+                tools.remove(tool);
+                points += tool.getPointPrice();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }
