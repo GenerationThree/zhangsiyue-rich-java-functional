@@ -6,7 +6,7 @@ import rich.Player;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class GameControlTest {
+public class GameControlInitTest {
 
     @Test
     public void should_add_player_and_get_player_list() throws Exception {
@@ -44,6 +44,13 @@ public class GameControlTest {
         assertThat(game.addPlayer(2), is(false));
 
         assertThat(game.getPlayerList().size(), is(1));
+    }
 
+    @Test
+    public void should_init_map_and_no_player_when_game_start() throws Exception {
+        GameControl game = new Game();
+
+        Map gameMap = game.getMap();
+        assertThat(gameMap.getLanList().size(), is(70));
     }
 }

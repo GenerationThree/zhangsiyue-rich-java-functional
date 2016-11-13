@@ -103,6 +103,8 @@ public class Player {
             points += ((Mine) current).getPoints();
             status = Status.END_TURN;
         }
+        if(current instanceof MagicHouse)
+            status = Status.END_TURN;
         if (freeTurn > 0)
             freeTurn--;
     }

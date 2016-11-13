@@ -12,6 +12,7 @@ public class Estate implements Land {
     public Estate(Player owner, double price) {
         this.owner = owner;
         this.price = price;
+        level = Level.ZERO;
     }
 
     public static Estate createEstateWithLevel(Player owner, double price, Level level) {

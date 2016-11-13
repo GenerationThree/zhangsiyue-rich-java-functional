@@ -8,4 +8,6 @@ public interface GameControl {
     List<Player> getPlayerList();
 
     boolean addPlayer(int id);
+
+    Map getMap();
 }

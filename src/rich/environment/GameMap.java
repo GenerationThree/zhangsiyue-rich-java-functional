@@ -13,6 +13,13 @@ public class GameMap implements Map {
     private java.util.Map toolSetList;
     private GameControl gameControl;
 
+    public GameMap(List<Land> lands){
+        landList = new ArrayList<Land>(){{
+           addAll(lands);
+        }};
+        toolSetList = new HashMap<>();
+    }
+
     public GameMap(Land... lands) {
         this.landList = new ArrayList<Land>() {{
             addAll(asList(lands));
@@ -36,6 +43,11 @@ public class GameMap implements Map {
         GameMap gameMap = new GameMap(lands);
         gameMap.gameControl = gameControl;
         return gameMap;
+    }
+
+    @Override
+    public List<Land> getLanList() {
+        return landList;
     }
 
     @Override
@@ -118,5 +130,10 @@ public class GameMap implements Map {
         }
         toolSetList.put(targetPosition, new Tool(type));
         return true;
+    }
+
+    @Override
+    public void putInGame(GameControl gameControl) {
+        this.gameControl = gameControl;
     }
 }

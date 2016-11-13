@@ -13,8 +13,55 @@ public class Game implements GameControl {
 
     public Game() {
         playerList = new ArrayList<>();
-        gameMap = new GameMap();
         gameDice = new GameDice();
+        gameMap = initMap();
+    }
+
+    private Map initMap(){
+        List<Land> landList = new ArrayList<Land>(){{
+            add(new StartPoint());
+        }};
+
+        for(int i = 0; i < 13; i++){
+            landList.add(new Estate(null, 200));
+        }
+
+        landList.add(new Hospital());
+
+        for(int i = 0; i < 13; i++){
+            landList.add(new Estate(null, 200));
+        }
+
+        landList.add(new TollHouse());
+
+        for(int i = 0; i < 6; i++){
+            landList.add(new Estate(null, 500));
+        }
+
+        landList.add(new GiftHouse());
+
+        for(int i = 0; i < 13; i++){
+            landList.add(new Estate(null, 300));
+        }
+
+        landList.add(new Prison());
+
+        for(int i = 0; i < 13; i++){
+            landList.add(new Estate(null, 300));
+        }
+
+        landList.add(new MagicHouse());
+
+        landList.add(new Mine(20));
+        landList.add(new Mine(80));
+        landList.add(new Mine(100));
+        landList.add(new Mine(40));
+        landList.add(new Mine(80));
+        landList.add(new Mine(60));
+
+        Map gameMap =  new GameMap(landList);
+
+        return gameMap;
     }
 
     @Override
@@ -34,5 +81,10 @@ public class Game implements GameControl {
             return false;
         playerList.add(new Player(id, gameMap, gameDice));
         return true;
+    }
+
+    @Override
+    public Map getMap() {
+        return gameMap;
     }
 }
