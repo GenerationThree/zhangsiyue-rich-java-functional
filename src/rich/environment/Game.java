@@ -124,4 +124,18 @@ public class Game implements GameControl {
         }
         return currentPlayer;
     }
+
+    @Override
+    public void handleCommand(Command command) {
+        switch (command.getType()){
+            case SET_INIT_BALANCE:
+                setInitBalance(Double.valueOf(command.getParameter()));
+                break;
+            case ADD_PLAYER:
+                addPlayer(Integer.valueOf(command.getParameter()));
+                break;
+            default:
+                return;
+        }
+    }
 }
