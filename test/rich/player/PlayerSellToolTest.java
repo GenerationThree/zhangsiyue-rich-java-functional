@@ -45,4 +45,16 @@ public class PlayerSellToolTest {
         assertThat(player.getTools().size(), is(preToolSum - 1));
         assertThat(player.getPoints(), is(prePoints + Tool.Type.ROBOT.getPointPrice()));
     }
+
+    @Test
+    public void should_not_sell_not_owned_tool() throws Exception {
+        Player player = Player.createPlayerWithRobot(1, map, dice, startPoint);
+        int preToolSum = player.getTools().size();
+        int prePoints = player.getPoints();
+        player.sellTool(Tool.Type.BLOCK);
+
+        assertThat(player.getTools().size(), is(preToolSum));
+        assertThat(player.getPoints(), is(prePoints));
+
+    }
 }
