@@ -3,6 +3,8 @@ package rich.environment;
 import org.junit.Test;
 import rich.Player;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -52,5 +54,17 @@ public class GameControlInitTest {
 
         Map gameMap = game.getMap();
         assertThat(gameMap.getLanList().size(), is(70));
+    }
+
+    @Test
+    public void should_set_player_init_balance() throws Exception {
+        GameControl game = new Game();
+        final double initBalance = 40000;
+        assertThat(game.setInitBalance(initBalance), is(true));
+        game.addPlayer(1);
+
+        List<Player> players = game.getPlayerList();
+        assertThat(players.size(), is(1));
+        assertThat(players.get(0).getBalance(), is(initBalance));
     }
 }

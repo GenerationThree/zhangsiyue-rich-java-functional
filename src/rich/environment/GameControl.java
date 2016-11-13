@@ -10,4 +10,6 @@ public interface GameControl {
     boolean addPlayer(int id);
 
     Map getMap();
+
+    boolean setInitBalance(double balance);
 }

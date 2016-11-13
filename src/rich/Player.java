@@ -22,10 +22,11 @@ public class Player {
     private int points;
 
 
-    public Player(int id, Map map, Dice dice) {
+    public Player(int id, Map map, Dice dice, double balance) {
         this.id = id;
         this.map = map;
         this.dice = dice;
+        this.balance = balance;
         status = Status.WAIT_COMMAND;
         lands = new ArrayList<>();
         tools = new ArrayList<>();
@@ -34,43 +35,40 @@ public class Player {
     }
 
     public static Player createPlayerWithStart(int id, Map map, Dice dice, Land start) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, 0);
         player.current = start;
         return player;
     }
 
     public static Player createPlayerWithBalance(int id, Map map, Dice dice, Land start, double balance) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, balance);
         player.current = start;
-        player.balance = balance;
         return player;
     }
 
     public static Player createPlayerWithEstate(int id, Map map, Dice dice, Land start, double balance, Land...lands) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, balance);
         player.current = start;
-        player.balance = balance;
         player.lands.addAll(asList(lands));
         return player;
     }
 
     public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance, int freeTurns) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, balance);
         player.current = start;
-        player.balance = balance;
         player.freeTurn = freeTurns;
         return player;
     }
 
     public static Player createPlayerWithPoint(int id, Map map, Dice dice, Land start, int points) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, 0);
         player.current = start;
         player.points = points;
         return player;
     }
 
     public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool... tools) {
-        Player player = new Player(id, map, dice);
+        Player player = new Player(id, map, dice, 0);
         player.current = start;
         player.tools.addAll(asList(tools));
         return player;

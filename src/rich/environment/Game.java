@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class Game implements GameControl {
-    List<Player> playerList;
-    Map gameMap;
-    Dice gameDice;
+    private List<Player> playerList;
+    private Map gameMap;
+    private Dice gameDice;
+    private double initBalance;
 
     public Game() {
         playerList = new ArrayList<>();
@@ -79,12 +80,18 @@ public class Game implements GameControl {
                 .findAny();
         if (player.isPresent())
             return false;
-        playerList.add(new Player(id, gameMap, gameDice));
+        playerList.add(new Player(id, gameMap, gameDice, initBalance));
         return true;
     }
 
     @Override
     public Map getMap() {
         return gameMap;
+    }
+
+    @Override
+    public boolean setInitBalance(double balance) {
+        initBalance = balance;
+        return true;
     }
 }
