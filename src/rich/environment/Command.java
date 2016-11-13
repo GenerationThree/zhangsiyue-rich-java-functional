@@ -23,6 +23,7 @@ public class Command {
         START_GAME,
         ROLL,
         SAY_YES,
-        SAY_NO
+        SAY_NO,
+        SELECT_GIFT
     }
 }

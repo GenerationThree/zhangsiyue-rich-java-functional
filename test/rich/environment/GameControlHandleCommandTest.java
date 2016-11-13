@@ -123,4 +123,28 @@ public class GameControlHandleCommandTest {
         assertThat(destination.getOwner(), is(nullValue()));
         assertThat(player.getBalance(), is(Double.valueOf(balance)));
     }
+
+    @Test
+    public void should_handle_select_gift_command() throws Exception {
+        Map map = mock(Map.class);
+        Dice dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        GiftHouse giftHouse = new GiftHouse();
+        when(map.move(any(), eq(1), any())).thenReturn(giftHouse);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        String balance = "2000";
+        Command setBalanceCommand = new Command(Command.Type.SET_INIT_BALANCE, balance);
+        Command startGameCommand = new Command(Command.Type.START_GAME, "");
+        Command rollCommand = new Command(Command.Type.ROLL, "");
+        Command selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "1");
+        game.handleCommand(setBalanceCommand);
+        game.addPlayer(1);
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(selectGiftCommand);
+
+        assertThat(player.getBalance(), is(Double.valueOf(balance) + GiftHouse.BONUS));
+    }
 }

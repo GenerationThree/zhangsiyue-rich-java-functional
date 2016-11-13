@@ -155,6 +155,9 @@ public class Game implements GameControl {
             case SAY_NO:
                 currentPlayer.sayNo();
                 break;
+            case SELECT_GIFT:
+                currentPlayer.selectGift(Integer.valueOf(command.getParameter()));
+                break;
             default:
                 return;
         }
