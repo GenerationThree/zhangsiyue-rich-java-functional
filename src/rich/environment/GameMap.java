@@ -100,7 +100,7 @@ public class GameMap implements Map {
     }
 
     @Override
-    public boolean setBlock(Land current, int distance) {
+    public boolean setTool(Land current, int distance, Tool.Type type) {
         int length = landList.size();
         int targetPosition = distance + landList.indexOf(current);
 
@@ -116,12 +116,7 @@ public class GameMap implements Map {
             if (player.getCurrent().equals(targetLand))
                 return false;
         }
-        toolSetList.put(targetPosition, new Tool(Tool.Type.BLOCK));
+        toolSetList.put(targetPosition, new Tool(type));
         return true;
-    }
-
-    @Override
-    public boolean setBomb(Land current, int distance) {
-        return false;
     }
 }

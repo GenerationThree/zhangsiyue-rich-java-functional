@@ -11,7 +11,5 @@ public interface Map {
 
     Land sellEstate(Player player, int i);
 
-    boolean setBlock(Land current, int distance);
-
-    boolean setBomb(Land current, int distance);
+    boolean setTool(Land current, int distance, Tool.Type type);
 }

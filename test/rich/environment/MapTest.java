@@ -127,10 +127,34 @@ public class MapTest {
         when(gameControl.getPlayerList()).thenReturn(players);
         Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
 
-        assertThat(gameMap.setBlock(startPoint, 1), is(true));
+        assertThat(gameMap.getTool(targetPoint), is(nullValue()));
+
+        assertThat(gameMap.setTool(startPoint, 1, Tool.Type.BLOCK), is(true));
+
         Tool tool = gameMap.getTool(targetPoint);
         assertThat(tool, notNullValue());
         assertThat(tool.getType(), is(Tool.Type.BLOCK));
+    }
+
+    @Test
+    public void should_set_bomb_at_specified_position() throws Exception {
+        GameControl gameControl = mock(GameControl.class);
+        Land targetPoint = mock(Land.class);
+        when(player.getCurrent()).thenReturn(startPoint);
+        List<Player> players = new ArrayList<Player>(){{
+            add(player);
+        }};
+        when(gameControl.getPlayerList()).thenReturn(players);
+        Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
+
+        assertThat(gameMap.getTool(targetPoint), is(nullValue()));
+
+        assertThat(gameMap.setTool(startPoint, 1, Tool.Type.BOMB), is(true));
+
+        Tool tool = gameMap.getTool(targetPoint);
+        assertThat(tool, notNullValue());
+        assertThat(tool.getType(), is(Tool.Type.BOMB));
+
     }
 
     @Test
@@ -147,7 +171,7 @@ public class MapTest {
         when(gameControl.getPlayerList()).thenReturn(players);
         Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
 
-        assertThat(gameMap.setBlock(startPoint, -5), is(false));
+        assertThat(gameMap.setTool(startPoint, -5, Tool.Type.BLOCK), is(false));
         Tool tool = gameMap.getTool(targetPoint);
         assertThat(tool, is(nullValue()));
     }
@@ -163,8 +187,8 @@ public class MapTest {
         when(gameControl.getPlayerList()).thenReturn(players);
         Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
 
-        assertThat(gameMap.setBlock(startPoint, -5), is(true));
-        assertThat(gameMap.setBlock(startPoint, -5), is(false));
+        assertThat(gameMap.setTool(startPoint, -5, Tool.Type.BLOCK), is(true));
+        assertThat(gameMap.setTool(startPoint, -5, Tool.Type.BLOCK), is(false));
         Tool tool = gameMap.getTool(targetPoint);
         assertThat(tool, notNullValue());
     }

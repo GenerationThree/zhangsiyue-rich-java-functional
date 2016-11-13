@@ -15,7 +15,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PlayerBlockTest {
+public class PlayerUseBlockTest {
     private Map map;
     private Dice dice;
     private Player player;
@@ -29,7 +29,7 @@ public class PlayerBlockTest {
         startPoint = mock(Land.class);
         block = new Tool(Tool.Type.BLOCK);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, block);
-        when(map.setBlock(any(), anyInt())).thenReturn(true);
+        when(map.setTool(any(), anyInt(), any())).thenReturn(true);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PlayerBlockTest {
 
     @Test
     public void should_not_remove_block_when_use_block_failed() throws Exception {
-        when(map.setBlock(any(), anyInt())).thenReturn(false);
+        when(map.setTool(any(), anyInt(), any())).thenReturn(false);
         int preToolSum = player.getTools().size();
         player.useTool(Tool.Type.BLOCK, 2);
 

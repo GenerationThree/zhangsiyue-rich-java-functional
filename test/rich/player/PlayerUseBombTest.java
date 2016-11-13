@@ -29,7 +29,7 @@ public class PlayerUseBombTest {
         startPoint = mock(Land.class);
         bomb = new Tool(Tool.Type.BOMB);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, bomb);
-        when(map.setBomb(any(), anyInt())).thenReturn(true);
+        when(map.setTool(any(), anyInt(), any())).thenReturn(true);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class PlayerUseBombTest {
     }
 
     @Test
-    public void should_not_use_block_without_bomb() throws Exception {
+    public void should_not_use_bomb_without_bomb() throws Exception {
         player = new Player(1, map, dice);
         int preToolSum = player.getTools().size();
 
@@ -59,8 +59,8 @@ public class PlayerUseBombTest {
     }
 
     @Test
-    public void should_not_remove_block_when_use_block_failed() throws Exception {
-        when(map.setBomb(any(), anyInt())).thenReturn(false);
+    public void should_not_remove_bomb_when_use_block_failed() throws Exception {
+        when(map.setTool(any(), anyInt(), any())).thenReturn(false);
         int preToolSum = player.getTools().size();
         player.useTool(Tool.Type.BOMB, 2);
 
