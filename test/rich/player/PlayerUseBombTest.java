@@ -10,6 +10,7 @@ import rich.environment.Tool;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -28,7 +29,7 @@ public class PlayerUseBombTest {
         startPoint = mock(Land.class);
         bomb = new Tool(Tool.Type.BOMB);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, bomb);
-        when(map.setBomb(anyInt())).thenReturn(true);
+        when(map.setBomb(any(), anyInt())).thenReturn(true);
     }
 
     @Test
@@ -59,7 +60,7 @@ public class PlayerUseBombTest {
 
     @Test
     public void should_not_remove_block_when_use_block_failed() throws Exception {
-        when(map.setBomb(anyInt())).thenReturn(false);
+        when(map.setBomb(any(), anyInt())).thenReturn(false);
         int preToolSum = player.getTools().size();
         player.useTool(Tool.Type.BOMB, 2);
 

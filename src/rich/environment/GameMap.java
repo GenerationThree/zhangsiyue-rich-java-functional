@@ -11,6 +11,7 @@ import static java.util.Arrays.asList;
 public class GameMap implements Map {
     private List<Land> landList;
     private java.util.Map toolSetList;
+    private GameControl gameControl;
 
     public GameMap(Land... lands) {
         this.landList = new ArrayList<Land>() {{
@@ -31,6 +32,11 @@ public class GameMap implements Map {
         return gameMap;
     }
 
+    public static GameMap createGameMagWithGameControl(GameControl gameControl, Land... lands){
+        GameMap gameMap = new GameMap(lands);
+        gameMap.gameControl = gameControl;
+        return gameMap;
+    }
 
     @Override
     public Land move(Land start, int step, Player player) {
@@ -94,12 +100,14 @@ public class GameMap implements Map {
     }
 
     @Override
-    public boolean setBlock(int distance) {
-        return false;
+    public boolean setBlock(Land current, int distance) {
+        int targetPosition = (landList.indexOf(current) + distance) % landList.size();
+        toolSetList.put(targetPosition, new Tool(Tool.Type.BLOCK));
+        return true;
     }
 
     @Override
-    public boolean setBomb(int distance) {
+    public boolean setBomb(Land current, int distance) {
         return false;
     }
 }

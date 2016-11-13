@@ -1,21 +1,35 @@
 package rich.environment;
 
+import org.junit.Before;
 import org.junit.Test;
 import rich.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MapTest {
+    private Land startPoint;
+    private Land endPoint;
+    private Player player;
+
+    @Before
+    public void setUp() throws Exception {
+        startPoint = mock(Land.class);
+        endPoint = mock(Land.class);
+        player = mock(Player.class);
+
+    }
+
     @Test
     public void should_move_to_right_place() throws Exception {
-        Land startPoint = mock(Land.class);
         Land passByPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
-        Player player = mock(Player.class);
         Map map = new GameMap(startPoint, passByPoint, endPoint);
 
         assertThat(map.move(startPoint, 2, player), is(endPoint));
@@ -23,10 +37,7 @@ public class MapTest {
 
     @Test
     public void should_stop_at_block_when_pass_by_block() throws Exception {
-        Land startPoint = mock(Land.class);
         Land blockPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
-        Player player = mock(Player.class);
         Map map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
 
         assertThat(map.move(startPoint, 2, player), is(blockPoint));
@@ -34,21 +45,19 @@ public class MapTest {
 
     @Test
     public void should_remove_block_after_player_pass_by() throws Exception {
-        Land startPoint = mock(Land.class);
         Land blockPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
-        Player player = mock(Player.class);
         Map map = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
+
         assertThat(map.getTool(blockPoint), notNullValue());
+
         map.move(startPoint, 2, player);
+
         assertThat(map.getTool(blockPoint), is(nullValue()));
     }
 
     @Test
     public void should_remove_bomb_after_player_pass_by() throws Exception {
-        Land startPoint = mock(Land.class);
         Land bombPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
         Player player = mock(Player.class);
         Map map = GameMap.createGameMapWithBomb(1, startPoint, bombPoint, endPoint);
 
@@ -60,9 +69,7 @@ public class MapTest {
 
     @Test
     public void should_remove_tool() throws Exception {
-        Land startPoint = mock(Land.class);
         Land blockPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
         Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, blockPoint, endPoint);
 
         assertThat(gameMap.getTool(blockPoint), notNullValue());
@@ -74,8 +81,6 @@ public class MapTest {
 
     @Test
     public void should_return_empty_after_sell_estate() throws Exception {
-        Land startPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
         Player player = mock(Player.class);
         Estate estatePoint = new Estate(player, 200);
         Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, estatePoint, endPoint);
@@ -89,9 +94,6 @@ public class MapTest {
 
     @Test
     public void should_return_null_when_player_sell_not_owned_estate() throws Exception {
-        Land startPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
-        Player player = mock(Player.class);
         Player otherPlayer = mock(Player.class);
         Estate estatePoint = new Estate(otherPlayer, 200);
         Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, estatePoint, endPoint);
@@ -105,8 +107,6 @@ public class MapTest {
 
     @Test
     public void should_return_null_when_player_sell_non_estate() throws Exception {
-        Land startPoint = mock(Land.class);
-        Land endPoint = mock(Land.class);
         Player player = mock(Player.class);
         Land hospital = new Hospital();
         Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, hospital, endPoint);
@@ -114,5 +114,24 @@ public class MapTest {
         Land sold = gameMap.sellEstate(player, 1);
 
         assertThat(sold, is(nullValue()));
+    }
+
+    @Test
+    public void should_set_block_at_specified_position() throws Exception {
+        GameControl gameControl = mock(GameControl.class);
+        Land targetPoint = mock(Land.class);
+        Player otherPlayer = mock(Player.class);
+        when(otherPlayer.getCurrent()).thenReturn(endPoint);
+        List<Player> players = new ArrayList<Player>(){{
+            add(player);
+            add(otherPlayer);
+        }};
+        when(gameControl.getPlayerList()).thenReturn(players);
+        Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
+
+        assertThat(gameMap.setBlock(startPoint, 1), is(true));
+        Tool tool = gameMap.getTool(targetPoint);
+        assertThat(tool, notNullValue());
+        assertThat(tool.getType(), is(Tool.Type.BLOCK));
     }
 }

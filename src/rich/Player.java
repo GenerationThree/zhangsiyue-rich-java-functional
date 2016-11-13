@@ -239,13 +239,13 @@ public class Player {
                         tools.remove(tool);
                         return true;
                     case BLOCK:
-                        if(map.setBlock(distance)) {
+                        if(map.setBlock(current, distance)) {
                             tools.remove(tool);
                             return true;
                         }
                         return false;
                     case BOMB:
-                        if (map.setBomb(distance)) {
+                        if (map.setBomb(current, distance)) {
                             tools.remove(tool);
                             return true;
                         }
