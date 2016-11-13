@@ -101,7 +101,19 @@ public class GameMap implements Map {
 
     @Override
     public boolean setBlock(Land current, int distance) {
-        int targetPosition = (landList.indexOf(current) + distance) % landList.size();
+        int length = landList.size();
+        int targetPosition = distance + landList.indexOf(current);
+
+        if(targetPosition < 0)
+            targetPosition = targetPosition % length + length;
+        else
+            targetPosition %= length;
+
+        Land targetLand = landList.get(targetPosition);
+        for(Player player : gameControl.getPlayerList()){
+            if (player.getCurrent().equals(targetLand))
+                return false;
+        }
         toolSetList.put(targetPosition, new Tool(Tool.Type.BLOCK));
         return true;
     }

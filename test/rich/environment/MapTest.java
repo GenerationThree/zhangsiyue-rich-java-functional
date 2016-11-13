@@ -134,4 +134,23 @@ public class MapTest {
         assertThat(tool, notNullValue());
         assertThat(tool.getType(), is(Tool.Type.BLOCK));
     }
+
+    @Test
+    public void should_not_set_block_when_other_player_at_specified_position_() throws Exception {
+        GameControl gameControl = mock(GameControl.class);
+        Land targetPoint = mock(Land.class);
+        Player otherPlayer = mock(Player.class);
+        when(otherPlayer.getCurrent()).thenReturn(targetPoint);
+        when(player.getCurrent()).thenReturn(startPoint);
+        List<Player> players = new ArrayList<Player>(){{
+            add(player);
+            add(otherPlayer);
+        }};
+        when(gameControl.getPlayerList()).thenReturn(players);
+        Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
+
+        assertThat(gameMap.setBlock(startPoint, -5), is(false));
+        Tool tool = gameMap.getTool(targetPoint);
+        assertThat(tool, is(nullValue()));
+    }
 }
