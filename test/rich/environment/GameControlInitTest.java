@@ -79,6 +79,25 @@ public class GameControlInitTest {
         List<Player> players = game.getPlayerList();
         assertThat(players.size(), is(1));
         assertThat(players.get(0).getBalance(), is(defaultBalance));
+    }
 
+    @Test
+    public void should_player_be_right_state() throws Exception {
+        GameControl game = new Game();
+        final double initBalance = 40000;
+        assertThat(game.setInitBalance(initBalance), is(true));
+        game.addPlayer(1);
+
+        List<Player> players = game.getPlayerList();
+        assertThat(players.size(), is(1));
+        Player player = players.get(0);
+        assertThat(player.getBalance(), is(initBalance));
+        assertThat(player.getStatus(), is(Player.Status.WAIT_TURN));
+        assertThat(player.getPoints(), is(0));
+        assertThat(player.getLands().size(), is(0));
+        assertThat(player.getTools().size(), is(0));
+        assertThat(player.getWaitTurn(), is(0));
+        assertThat(player.getFreeTurn(), is(0));
+        assertThat(player.getCurrent() instanceof StartPoint, is(true));
     }
 }

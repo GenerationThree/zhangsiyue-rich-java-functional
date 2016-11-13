@@ -30,7 +30,7 @@ public class PlayerRollOtherEstateTest {
         map = mock(Map.class);
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
-        otherPlayer = new Player(2, map, dice, 0);
+        otherPlayer = Player.createPlayerStartTurn(2, map, dice, 0);
         otherEstate = Estate.createEstateWithLevel(otherPlayer, ESTATE_PRICE, ESTATE_LEVEL);
         player = Player.createPlayerWithBalance(1, map, dice, startPoint, START_BALANCE);
         fee = ESTATE_PRICE * ESTATE_LEVEL.getTimes();

@@ -5,6 +5,7 @@ import rich.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 
@@ -135,5 +136,14 @@ public class GameMap implements Map {
     @Override
     public void putInGame(GameControl gameControl) {
         this.gameControl = gameControl;
+    }
+
+    @Override
+    public Land getStartPoint() {
+        Optional<Land> start = landList
+                .stream()
+                .filter(land -> land instanceof StartPoint)
+                .findAny();
+        return start.orElse(null);
     }
 }

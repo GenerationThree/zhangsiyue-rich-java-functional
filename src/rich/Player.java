@@ -27,50 +27,62 @@ public class Player {
         this.map = map;
         this.dice = dice;
         this.balance = balance;
-        status = Status.WAIT_COMMAND;
+        status = Status.WAIT_TURN;
         lands = new ArrayList<>();
         tools = new ArrayList<>();
         freeTurn = 0;
         waitTurn = 0;
+        current = map.getStartPoint();
     }
 
     public static Player createPlayerWithStart(int id, Map map, Dice dice, Land start) {
-        Player player = new Player(id, map, dice, 0);
+        Player player = createPlayerStartTurn(id, map, dice, 0);
         player.current = start;
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithBalance(int id, Map map, Dice dice, Land start, double balance) {
-        Player player = new Player(id, map, dice, balance);
+        Player player = createPlayerStartTurn(id, map, dice, balance);
         player.current = start;
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithEstate(int id, Map map, Dice dice, Land start, double balance, Land...lands) {
-        Player player = new Player(id, map, dice, balance);
+        Player player = createPlayerStartTurn(id, map, dice, balance);
         player.current = start;
         player.lands.addAll(asList(lands));
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance, int freeTurns) {
-        Player player = new Player(id, map, dice, balance);
+        Player player = createPlayerStartTurn(id, map, dice, balance);
         player.current = start;
         player.freeTurn = freeTurns;
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithPoint(int id, Map map, Dice dice, Land start, int points) {
-        Player player = new Player(id, map, dice, 0);
+        Player player = createPlayerStartTurn(id, map, dice, 0);
         player.current = start;
         player.points = points;
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool... tools) {
-        Player player = new Player(id, map, dice, 0);
+        Player player = createPlayerStartTurn(id, map, dice, 0);
         player.current = start;
         player.tools.addAll(asList(tools));
+        return player;
+    }
+
+    public static Player createPlayerStartTurn(int id, Map map, Dice dice, double balance) {
+        Player player = new Player(id, map, dice, balance);
+        player.status = Status.WAIT_COMMAND;
         return player;
     }
 
@@ -284,5 +296,5 @@ public class Player {
         return id;
     }
 
-    public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
+    public enum Status {WAIT_TURN, WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }

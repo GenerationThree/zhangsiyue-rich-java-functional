@@ -18,4 +18,6 @@ public interface Map {
     boolean setTool(Land current, int distance, Tool.Type type);
 
     void putInGame(GameControl gameControl);
+
+    Land getStartPoint();
 }

@@ -50,7 +50,7 @@ public class PlayerUseBlockTest {
 
     @Test
     public void should_not_use_block_without_block() throws Exception {
-        player = new Player(1, map, dice, 0);
+        player = Player.createPlayerStartTurn(1, map, dice, 0);
         int preToolSum = player.getTools().size();
 
         player.useTool(Tool.Type.BLOCK, 2);
