@@ -51,7 +51,6 @@ public class PlayerRollOtherEstateTest {
         final int freeTurn = 1;
         Player playerFree = Player.createPlayerFreeForFee(3, map, dice, startPoint, START_BALANCE, freeTurn);
 
-        System.out.println(playerFree.getFreeTurn());
         playerFree.roll();
 
         assertThat(playerFree.getBalance(), is(START_BALANCE));

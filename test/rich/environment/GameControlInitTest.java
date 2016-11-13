@@ -92,7 +92,7 @@ public class GameControlInitTest {
         assertThat(players.size(), is(1));
         Player player = players.get(0);
         assertThat(player.getBalance(), is(initBalance));
-        assertThat(player.getStatus(), is(Player.Status.WAIT_TURN));
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
         assertThat(player.getPoints(), is(0));
         assertThat(player.getLands().size(), is(0));
         assertThat(player.getTools().size(), is(0));

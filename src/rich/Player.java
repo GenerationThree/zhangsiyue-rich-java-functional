@@ -27,7 +27,7 @@ public class Player {
         this.map = map;
         this.dice = dice;
         this.balance = balance;
-        status = Status.WAIT_TURN;
+        status = Status.END_TURN;
         lands = new ArrayList<>();
         tools = new ArrayList<>();
         freeTurn = 0;
@@ -211,35 +211,6 @@ public class Player {
         status = Status.END_TURN;
     }
 
-    public Land getCurrent() {
-        return current;
-    }
-
-    public List<Land> getLands() {
-        return lands;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public int getWaitTurn() {
-        return waitTurn;
-    }
-
-    public int getFreeTurn() {
-        return freeTurn;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-
-    public List<Tool> getTools() {
-        return tools;
-    }
-
     public boolean useTool(Tool.Type type, int distance){
         for (Tool tool:tools){
             if(tool.getType() == type) {
@@ -288,6 +259,40 @@ public class Player {
             }
         }
         return false;
+    }
+
+    public boolean startTurn(){
+        status = Status.WAIT_COMMAND;
+        return true;
+    }
+
+    public Land getCurrent() {
+        return current;
+    }
+
+    public List<Land> getLands() {
+        return lands;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public int getWaitTurn() {
+        return waitTurn;
+    }
+
+    public int getFreeTurn() {
+        return freeTurn;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+
+    public List<Tool> getTools() {
+        return tools;
     }
 
     public int getId() {
