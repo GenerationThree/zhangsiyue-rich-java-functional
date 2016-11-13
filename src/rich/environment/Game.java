@@ -6,17 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
+
 public class Game implements GameControl {
     private List<Player> playerList;
     private Map gameMap;
     private Dice gameDice;
     private double initBalance;
+    private Player currentPlayer;
 
     public Game() {
         playerList = new ArrayList<>();
         gameDice = new GameDice();
         gameMap = initMap();
         initBalance = 10000;
+        currentPlayer = null;
+    }
+
+    public static Game createGameWithSpecifiedPlayer(Player...players){
+        Game game = new Game();
+        game.playerList.addAll(asList(players));
+        return game;
     }
 
     private Map initMap(){
@@ -96,5 +106,20 @@ public class Game implements GameControl {
             return false;
         initBalance = balance;
         return true;
+    }
+
+    @Override
+    public Player chooseCurrentPlayer() {
+        if(currentPlayer == null)
+            currentPlayer = playerList.get(0);
+        else {
+            int startIndex = playerList.indexOf(currentPlayer) + 1;
+            for (int i = 0; i < playerList.size()-1 ; i ++){
+                Player checkPlayer = playerList.get((i + startIndex) % playerList.size());
+                if(checkPlayer.startTurn())
+                    currentPlayer = checkPlayer;
+            }
+        }
+        return currentPlayer;
     }
 }

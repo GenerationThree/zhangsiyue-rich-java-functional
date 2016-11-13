@@ -12,4 +12,6 @@ public interface GameControl {
     Map getMap();
 
     boolean setInitBalance(double balance);
+
+    Player chooseCurrentPlayer();
 }
