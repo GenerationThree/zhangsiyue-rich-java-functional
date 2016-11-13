@@ -12,4 +12,6 @@ public interface Map {
     Land sellEstate(Player player, int i);
 
     boolean setBlock(int distance);
+
+    boolean setBomb(int distance);
 }

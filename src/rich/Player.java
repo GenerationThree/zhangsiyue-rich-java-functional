@@ -243,8 +243,11 @@ public class Player {
                         }
                         return false;
                     case BOMB:
-                        tools.remove(tool);
-                        return true;
+                        if (map.setBomb(distance)) {
+                            tools.remove(tool);
+                            return true;
+                        }
+                        return false;
                     default:
                         return false;
                 }

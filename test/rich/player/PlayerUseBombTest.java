@@ -28,7 +28,7 @@ public class PlayerUseBombTest {
         startPoint = mock(Land.class);
         bomb = new Tool(Tool.Type.BOMB);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, bomb);
-        when(map.setBlock(anyInt())).thenReturn(true);
+        when(map.setBomb(anyInt())).thenReturn(true);
     }
 
     @Test
@@ -52,6 +52,15 @@ public class PlayerUseBombTest {
         player = new Player(1, map, dice);
         int preToolSum = player.getTools().size();
 
+        player.useTool(Tool.Type.BOMB, 2);
+
+        assertThat(player.getTools().size(), is(preToolSum));
+    }
+
+    @Test
+    public void should_not_remove_block_when_use_block_failed() throws Exception {
+        when(map.setBomb(anyInt())).thenReturn(false);
+        int preToolSum = player.getTools().size();
         player.useTool(Tool.Type.BOMB, 2);
 
         assertThat(player.getTools().size(), is(preToolSum));

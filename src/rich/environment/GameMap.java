@@ -97,4 +97,9 @@ public class GameMap implements Map {
     public boolean setBlock(int distance) {
         return false;
     }
+
+    @Override
+    public boolean setBomb(int distance) {
+        return false;
+    }
 }
