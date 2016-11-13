@@ -4,6 +4,7 @@ import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 import rich.Player;
 
 public class Estate implements Land {
+
     private Player owner;
     private double price;
     private Level level;
@@ -42,6 +43,10 @@ public class Estate implements Land {
         }
         return false;
 
+    }
+
+    public void sell() {
+        this.owner = null;
     }
 
 

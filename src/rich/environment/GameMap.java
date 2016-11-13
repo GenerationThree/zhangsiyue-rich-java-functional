@@ -13,20 +13,20 @@ public class GameMap implements Map {
     private java.util.Map toolSetList;
 
     public GameMap(Land... lands) {
-        this.landList = new ArrayList<Land>(){{
+        this.landList = new ArrayList<Land>() {{
             addAll(asList(lands));
         }};
         this.toolSetList = new HashMap<>();
     }
 
-    public static GameMap createGameMapWithBlock( int position, Land... lands) {
-        GameMap gameMap =  new GameMap(lands);
+    public static GameMap createGameMapWithBlock(int position, Land... lands) {
+        GameMap gameMap = new GameMap(lands);
         gameMap.toolSetList.put(position, new Tool(Tool.Type.BLOCK));
         return gameMap;
     }
 
-    public static GameMap createGameMapWithBomb( int position, Land... lands) {
-        GameMap gameMap =  new GameMap(lands);
+    public static GameMap createGameMapWithBomb(int position, Land... lands) {
+        GameMap gameMap = new GameMap(lands);
         gameMap.toolSetList.put(position, new Tool(Tool.Type.BOMB));
         return gameMap;
     }
@@ -36,10 +36,10 @@ public class GameMap implements Map {
     public Land move(Land start, int step, Player player) {
         Land current = start;
         int statIndex = landList.indexOf(start);
-        for (int i = 1; i <= step; i++){
+        for (int i = 1; i <= step; i++) {
             current = landList.get((statIndex + i) % landList.size());
             Tool tool = getTool(current);
-            if(tool != null) {
+            if (tool != null) {
                 if (tool.getType() == Tool.Type.BLOCK) {
                     toolSetList.remove(statIndex + i);
                     return current;
@@ -55,8 +55,8 @@ public class GameMap implements Map {
     }
 
     private Land getHospital() {
-        for (Land land : landList){
-            if(land instanceof Hospital)
+        for (Land land : landList) {
+            if (land instanceof Hospital)
                 return land;
         }
         return null;
@@ -72,9 +72,9 @@ public class GameMap implements Map {
     @Override
     public void removeToll(Land current) {
         int currentIndex = landList.indexOf(current);
-        for (int i = 1; i <= 10; i++){
+        for (int i = 1; i <= 10; i++) {
             Land target = landList.get((currentIndex + i) % landList.size());
-            if(getTool(target)!= null){
+            if (getTool(target) != null) {
                 toolSetList.remove(currentIndex + i);
             }
         }
@@ -82,6 +82,8 @@ public class GameMap implements Map {
 
     @Override
     public Land sellEstate(Player player, int i) {
-        return null;
+        Estate estate = (Estate)landList.get(i);
+        estate.sell();
+        return estate;
     }
 }

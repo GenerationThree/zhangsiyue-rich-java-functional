@@ -71,4 +71,19 @@ public class MapTest {
 
         assertThat(gameMap.getTool(blockPoint), is(nullValue()));
     }
+
+    @Test
+    public void should_return_empty_after_sell_estate() throws Exception {
+        Land startPoint = mock(Land.class);
+        Land endPoint = mock(Land.class);
+        Player player = mock(Player.class);
+        Estate estatePoint = new Estate(player, 200);
+        Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, estatePoint, endPoint);
+
+        assertThat(estatePoint.getOwner(), is(player));
+        Land sold = gameMap.sellEstate(player, 1);
+
+        assertThat(sold, is(estatePoint));
+        assertThat(((Estate)sold).getOwner(), is(nullValue()));
+    }
 }
