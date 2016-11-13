@@ -242,6 +242,8 @@ public class Player {
                             return true;
                         }
                         return false;
+                    case BOMB:
+                        return true;
                     default:
                         return false;
                 }
