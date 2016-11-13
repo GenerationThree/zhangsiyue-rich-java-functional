@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PlayerRollToTollHouseTest {
+public class PlayerRollToToolHouseTest {
     private Map map;
     private Dice dice;
     private Land startPoint;
@@ -85,6 +85,27 @@ public class PlayerRollToTollHouseTest {
 
         assertThat(player.getPoints(), is(startPointSum));
         assertThat(player.getTools().size(), is(0));
+    }
+
+    @Test
+    public void should_not_buy_tool_when_have_ten_tools_at_tool_house() throws Exception {
+        toolHouse = new TollHouse();
+        map = new GameMap(startPoint, toolHouse);
+        int startPoints = Tool.Type.BLOCK.getPointPrice()*11;
+        Player player = Player.createPlayerWithPoint(1, map, dice, startPoint, startPoints);
+        for(int i = 0; i < 10; i++){
+            player.roll();
+            player.buyTool("1");
+            player.roll();
+        }
+        int preToolSum = player.getTools().size();
+
+        assertThat(preToolSum, is(10));
+
+        player.roll();
+        player.buyTool("1");
+
+        assertThat(player.getTools().size(), is(preToolSum));
     }
 
     @Test

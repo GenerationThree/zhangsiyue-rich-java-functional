@@ -69,10 +69,10 @@ public class Player {
         return player;
     }
 
-    public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool tool) {
+    public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool... tools) {
         Player player = new Player(id, map, dice);
         player.current = start;
-        player.tools.add(tool);
+        player.tools.addAll(asList(tools));
         return player;
     }
 
@@ -182,6 +182,8 @@ public class Player {
             status = Status.END_TURN;
             return;
         }
+        if(tools.size() == 10)
+            return;
         Tool tool = ((TollHouse)current).getTool(choiceStr[0] - '0');
         if (tool != null) {
             int toolPointPrice = tool.getPointPrice();
