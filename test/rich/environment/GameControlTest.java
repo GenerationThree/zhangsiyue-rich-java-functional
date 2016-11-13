@@ -18,6 +18,5 @@ public class GameControlTest {
         game.addPlayer(player);
 
         assertThat(game.getPlayerList().size(), is(1));
-
     }
 }
