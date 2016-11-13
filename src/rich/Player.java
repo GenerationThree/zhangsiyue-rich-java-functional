@@ -280,5 +280,9 @@ public class Player {
         return false;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }

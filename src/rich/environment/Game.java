@@ -4,6 +4,7 @@ import rich.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Game implements GameControl {
     List<Player> playerList;
@@ -23,7 +24,13 @@ public class Game implements GameControl {
 
     @Override
     public boolean addPlayer(int id) {
-        if(id < 1 || id >4)
+        if (id < 1 || id > 4)
+            return false;
+        Optional<Player> player = playerList
+                .stream()
+                .filter(p -> p.getId() == id)
+                .findAny();
+        if (player.isPresent())
             return false;
         playerList.add(new Player(id, gameMap, gameDice));
         return true;

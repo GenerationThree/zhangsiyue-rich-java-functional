@@ -13,7 +13,7 @@ public class GameControlTest {
         GameControl game = new Game();
         assertThat(game.getPlayerList().size(), is(0));
 
-        game.addPlayer(1);
+        assertThat(game.addPlayer(1), is(true));
 
         assertThat(game.getPlayerList().size(), is(1));
     }
@@ -23,13 +23,27 @@ public class GameControlTest {
         GameControl game = new Game();
         assertThat(game.getPlayerList().size(), is(0));
 
-        game.addPlayer(0);
+        assertThat(game.addPlayer(0), is(false));
 
         assertThat(game.getPlayerList().size(), is(0));
 
-        game.addPlayer(7);
+        assertThat(game.addPlayer(7), is(false));
 
         assertThat(game.getPlayerList().size(), is(0));
+    }
+
+    @Test
+    public void should_not_add_player_with_same_id() throws Exception {
+        GameControl game = new Game();
+        assertThat(game.getPlayerList().size(), is(0));
+
+        assertThat(game.addPlayer(2), is(true));
+
+        assertThat(game.getPlayerList().size(), is(1));
+
+        assertThat(game.addPlayer(2), is(false));
+
+        assertThat(game.getPlayerList().size(), is(1));
 
     }
 }
