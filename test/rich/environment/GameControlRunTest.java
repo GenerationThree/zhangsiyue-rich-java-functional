@@ -32,7 +32,7 @@ public class GameControlRunTest {
     }
 
     @Test
-    public void should_choose_current_player_when_current_player_not_wait() throws Exception {
+    public void should_choose_next_player_when_next_player_not_wait() throws Exception {
         Player playerFirst = Player.createPlayerSpecifiedStatus(1, map, dice, START_BALANCE, Player.Status.END_TURN, 0, 0);
         Player playerTarget = Player.createPlayerSpecifiedStatus(2, map, dice, START_BALANCE, Player.Status.END_TURN, 0, 0);
         GameControl game = Game.createGameWithSpecifiedPlayer(playerFirst, playerTarget);
@@ -44,7 +44,7 @@ public class GameControlRunTest {
     }
 
     @Test
-    public void should_choose_next_ready_player_when_current_need_wait() throws Exception {
+    public void should_choose_next_player_after_next_player_when_next_need_wait() throws Exception {
         Player playerStart = Player.createPlayerSpecifiedStatus(1, map, dice, START_BALANCE, Player.Status.END_TURN, 0, 0);
         Player playerWait = Player.createPlayerSpecifiedStatus(2, map, dice, START_BALANCE, Player.Status.END_TURN, 1, 0);
         Player playerTarget = Player.createPlayerSpecifiedStatus(3, map, dice, START_BALANCE, Player.Status.END_TURN, 0, 0);
