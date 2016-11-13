@@ -152,6 +152,9 @@ public class Game implements GameControl {
             case SAY_YES:
                 currentPlayer.sayYes();
                 break;
+            case SAY_NO:
+                currentPlayer.sayNo();
+                break;
             default:
                 return;
         }

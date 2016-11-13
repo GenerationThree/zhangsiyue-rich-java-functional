@@ -22,6 +22,7 @@ public class Command {
         ADD_PLAYER,
         START_GAME,
         ROLL,
-        SAY_YES
+        SAY_YES,
+        SAY_NO
     }
 }
