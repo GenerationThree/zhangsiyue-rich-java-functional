@@ -46,4 +46,14 @@ public class PlayerUseBombTest {
 
         assertThat(player.getTools().size(), is(preToolSum - 1));
     }
+
+    @Test
+    public void should_not_use_block_without_bomb() throws Exception {
+        player = new Player(1, map, dice);
+        int preToolSum = player.getTools().size();
+
+        player.useTool(Tool.Type.BOMB, 2);
+
+        assertThat(player.getTools().size(), is(preToolSum));
+    }
 }
