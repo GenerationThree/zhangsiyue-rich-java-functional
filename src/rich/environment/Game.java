@@ -149,6 +149,9 @@ public class Game implements GameControl {
             case ROLL:
                 currentPlayer.roll();
                 break;
+            case SAY_YES:
+                currentPlayer.sayYes();
+                break;
             default:
                 return;
         }

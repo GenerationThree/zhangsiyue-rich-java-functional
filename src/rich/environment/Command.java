@@ -21,6 +21,7 @@ public class Command {
         SET_INIT_BALANCE,
         ADD_PLAYER,
         START_GAME,
-        ROLL
+        ROLL,
+        SAY_YES
     }
 }

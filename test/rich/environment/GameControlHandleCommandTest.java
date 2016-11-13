@@ -71,4 +71,30 @@ public class GameControlHandleCommandTest {
 
         assertThat(player.getCurrent(), is(destination));
     }
+
+    @Test
+    public void should_handle_say_yes_after_roll_to_empty() throws Exception {
+        Map map = mock(Map.class);
+        Dice dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        Estate destination = new Estate(null, 200);
+        when(map.move(any(), eq(1), any())).thenReturn(destination);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        String balance = "2000";
+        Command setBalanceCommand = new Command(Command.Type.SET_INIT_BALANCE, balance);
+        Command startGameCommand = new Command(Command.Type.START_GAME, "");
+        Command rollCommand = new Command(Command.Type.ROLL, "");
+        Command sayYesCommand = new Command(Command.Type.SAY_YES, "");
+        game.handleCommand(setBalanceCommand);
+        game.addPlayer(1);
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(sayYesCommand);
+
+        assertThat(player.getCurrent(), is(destination));
+        assertThat(destination.getOwner(), is(player));
+        assertThat(player.getBalance(), is(Double.valueOf(balance)-200));
+    }
 }
