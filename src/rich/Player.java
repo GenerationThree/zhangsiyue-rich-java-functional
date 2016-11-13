@@ -260,11 +260,13 @@ public class Player {
         return false;
     }
 
-    public boolean useBlock() {
+    public boolean useBlock(int distance) {
         for (Tool tool:tools){
             if(tool.getType() == Tool.Type.BLOCK) {
-                tools.remove(tool);
-                break;
+                if(map.setBlock(distance)) {
+                    tools.remove(tool);
+                    return true;
+                }
             }
         }
         return false;

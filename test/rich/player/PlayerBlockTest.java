@@ -10,7 +10,9 @@ import rich.environment.Tool;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerBlockTest {
     private Map map;
@@ -26,11 +28,12 @@ public class PlayerBlockTest {
         startPoint = mock(Land.class);
         block = new Tool(Tool.Type.BLOCK);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, block);
+        when(map.setBlock(anyInt())).thenReturn(true);
     }
 
     @Test
     public void should_wait_command_after_use_block() throws Exception {
-        player.useBlock();
+        player.useBlock(2);
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
 
@@ -39,7 +42,7 @@ public class PlayerBlockTest {
     @Test
     public void should_remove_block_after_use() throws Exception {
         int preToolSum = player.getTools().size();
-        player.useBlock();
+        player.useBlock(2);
 
         assertThat(player.getTools().size(), is(preToolSum - 1));
     }
@@ -49,7 +52,16 @@ public class PlayerBlockTest {
         player = new Player(1, map, dice);
         int preToolSum = player.getTools().size();
 
-        player.useBlock();
+        player.useBlock(2);
+
+        assertThat(player.getTools().size(), is(preToolSum));
+    }
+
+    @Test
+    public void should_not_remove_block_when_use_block_failed() throws Exception {
+        when(map.setBlock(anyInt())).thenReturn(false);
+        int preToolSum = player.getTools().size();
+        player.useBlock(2);
 
         assertThat(player.getTools().size(), is(preToolSum));
     }

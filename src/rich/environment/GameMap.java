@@ -92,4 +92,9 @@ public class GameMap implements Map {
         }
         return null;
     }
+
+    @Override
+    public boolean setBlock(int distance) {
+        return false;
+    }
 }

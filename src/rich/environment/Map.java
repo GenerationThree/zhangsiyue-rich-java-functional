@@ -10,4 +10,6 @@ public interface Map {
     void removeTool(Land current);
 
     Land sellEstate(Player player, int i);
+
+    boolean setBlock(int distance);
 }
