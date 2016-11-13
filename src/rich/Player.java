@@ -106,8 +106,8 @@ public class Player {
         if (current instanceof GiftHouse) {
             status = Status.WAIT_RESPONSE;
         }
-        if (current instanceof TollHouse) {
-            if (points >= TollHouse.LOW_LIMIT)
+        if (current instanceof ToolHouse) {
+            if (points >= ToolHouse.LOW_LIMIT)
                 status = Status.WAIT_RESPONSE;
             else
                 status = Status.END_TURN;
@@ -197,7 +197,7 @@ public class Player {
         }
         if(tools.size() == 10)
             return;
-        Tool tool = ((TollHouse)current).getTool(choiceStr[0] - '0');
+        Tool tool = ((ToolHouse)current).getTool(choiceStr[0] - '0');
         if (tool != null) {
             int toolPointPrice = tool.getPointPrice();
             if (points >= toolPointPrice) {
@@ -205,7 +205,7 @@ public class Player {
                 points -= toolPointPrice;
             }
         }
-        if(points < TollHouse.LOW_LIMIT)
+        if(points < ToolHouse.LOW_LIMIT)
             status = Status.END_TURN;
     }
 

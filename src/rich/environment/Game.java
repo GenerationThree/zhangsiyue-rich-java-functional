@@ -51,7 +51,7 @@ public class Game implements GameControl {
             landList.add(new Estate(null, 200));
         }
 
-        landList.add(new TollHouse());
+        landList.add(new ToolHouse());
 
         for(int i = 0; i < 6; i++){
             landList.add(new Estate(null, 500));
@@ -157,6 +157,9 @@ public class Game implements GameControl {
                 break;
             case SELECT_GIFT:
                 currentPlayer.selectGift(Integer.valueOf(command.getParameter()));
+                break;
+            case BUY_TOOL:
+                currentPlayer.buyTool(command.getParameter());
                 break;
             default:
                 return;

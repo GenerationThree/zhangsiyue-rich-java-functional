@@ -24,6 +24,7 @@ public class Command {
         ROLL,
         SAY_YES,
         SAY_NO,
-        SELECT_GIFT
+        SELECT_GIFT,
+        BUY_TOOL
     }
 }

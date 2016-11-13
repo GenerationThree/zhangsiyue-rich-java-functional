@@ -16,14 +16,14 @@ public class PlayerRollToToolHouseTest {
     private Land startPoint;
     private Land toolHouse;
 
-    private static final int LOW_LIMIT_FOR_POINT = TollHouse.LOW_LIMIT;
+    private static final int LOW_LIMIT_FOR_POINT = ToolHouse.LOW_LIMIT;
     private static final int START_POINTS = 100;
 
     @Before
     public void setUp() throws Exception {
         dice = mock(Dice.class);
         startPoint = mock(Land.class);
-        toolHouse = mock(TollHouse.class);
+        toolHouse = mock(ToolHouse.class);
         map = new GameMap(startPoint, toolHouse);
 
         when(dice.next()).thenReturn(1);
@@ -49,7 +49,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_add_tool_after_buy_tool_at_tool_house() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
@@ -62,7 +62,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_not_buy_tool_when_make_invalid_choice() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
@@ -75,7 +75,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_not_buy_tool_without_enough_points_for_chosen_tool_at_tool_house() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         final int startPointSum = Tool.Type.BLOCK.getPointPrice() - 1;
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
@@ -89,7 +89,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_not_buy_tool_when_have_ten_tools_at_tool_house() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         int startPoints = Tool.Type.BLOCK.getPointPrice()*11;
         Player player = Player.createPlayerWithPoint(1, map, dice, startPoint, startPoints);
@@ -110,7 +110,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_wait_response_after_buy_tool_at_tool_house() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 
@@ -122,7 +122,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_end_turn_without_enough_point_after_buy_tool() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         final int startPointSum = Tool.Type.BLOCK.getPointPrice() + LOW_LIMIT_FOR_POINT -1;
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, startPointSum);
@@ -135,7 +135,7 @@ public class PlayerRollToToolHouseTest {
 
     @Test
     public void should_end_turn_when_choose_quit_tool_house() throws Exception {
-        toolHouse = new TollHouse();
+        toolHouse = new ToolHouse();
         map = new GameMap(startPoint, toolHouse);
         Player player = Player.createPlayerWithPoint(2, map, dice, startPoint, START_POINTS);
 

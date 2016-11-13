@@ -147,4 +147,35 @@ public class GameControlHandleCommandTest {
 
         assertThat(player.getBalance(), is(Double.valueOf(balance) + GiftHouse.BONUS));
     }
+
+    @Test
+    public void should_handle_buy_tool_command() throws Exception {
+        Map map = mock(Map.class);
+        Dice dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        Mine minePoint = new Mine(50);
+        ToolHouse toolHouse = new ToolHouse();
+        when(map.move(any(), eq(1), any())).thenReturn(minePoint);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        String balance = "2000";
+        Command setBalanceCommand = new Command(Command.Type.SET_INIT_BALANCE, balance);
+        Command startGameCommand = new Command(Command.Type.START_GAME, "");
+        Command rollCommand = new Command(Command.Type.ROLL, "");
+        Command buyToolCommand = new Command(Command.Type.BUY_TOOL, "1");
+        game.handleCommand(setBalanceCommand);
+        game.addPlayer(1);
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+        int prePoints = player.getPoints();
+        assertThat(prePoints, is(50));
+        assertThat(player.getTools().size(), is(0));
+        when(map.move(any(), eq(1), any())).thenReturn(toolHouse);
+        game.handleCommand(rollCommand);
+
+        game.handleCommand(buyToolCommand);
+
+        assertThat(player.getTools().size(), is(1));
+    }
 }

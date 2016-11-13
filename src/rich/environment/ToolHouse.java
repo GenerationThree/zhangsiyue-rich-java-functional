@@ -3,7 +3,7 @@ package rich.environment;
 import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 import rich.Player;
 
-public class TollHouse implements Land {
+public class ToolHouse implements Land {
     public static final int LOW_LIMIT = 30;
 
     public Tool getTool(int choice) {
