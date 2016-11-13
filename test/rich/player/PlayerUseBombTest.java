@@ -50,7 +50,7 @@ public class PlayerUseBombTest {
 
     @Test
     public void should_not_use_bomb_without_bomb() throws Exception {
-        player = Player.createPlayerStartTurn(1, map, dice, 0);
+        player = Player.createPlayerSpecifiedStatus(1, map, dice, 0, Player.Status.WAIT_COMMAND, 0, 0);
         int preToolSum = player.getTools().size();
 
         player.useTool(Tool.Type.BOMB, 2);

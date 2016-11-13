@@ -36,21 +36,21 @@ public class Player {
     }
 
     public static Player createPlayerWithStart(int id, Map map, Dice dice, Land start) {
-        Player player = createPlayerStartTurn(id, map, dice, 0);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, 0, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithBalance(int id, Map map, Dice dice, Land start, double balance) {
-        Player player = createPlayerStartTurn(id, map, dice, balance);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, balance, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.status = Status.WAIT_COMMAND;
         return player;
     }
 
     public static Player createPlayerWithEstate(int id, Map map, Dice dice, Land start, double balance, Land...lands) {
-        Player player = createPlayerStartTurn(id, map, dice, balance);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, balance, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.lands.addAll(asList(lands));
         player.status = Status.WAIT_COMMAND;
@@ -58,7 +58,7 @@ public class Player {
     }
 
     public static Player createPlayerFreeForFee(int id, Map map, Dice dice, Land start, double balance, int freeTurns) {
-        Player player = createPlayerStartTurn(id, map, dice, balance);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, balance, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.freeTurn = freeTurns;
         player.status = Status.WAIT_COMMAND;
@@ -66,7 +66,7 @@ public class Player {
     }
 
     public static Player createPlayerWithPoint(int id, Map map, Dice dice, Land start, int points) {
-        Player player = createPlayerStartTurn(id, map, dice, 0);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, 0, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.points = points;
         player.status = Status.WAIT_COMMAND;
@@ -74,15 +74,18 @@ public class Player {
     }
 
     public static Player createPlayerWithTool(int id, Map map, Dice dice, Land start, Tool... tools) {
-        Player player = createPlayerStartTurn(id, map, dice, 0);
+        Player player = createPlayerSpecifiedStatus(id, map, dice, 0, Status.WAIT_COMMAND, 0, 0);
         player.current = start;
         player.tools.addAll(asList(tools));
         return player;
     }
 
-    public static Player createPlayerStartTurn(int id, Map map, Dice dice, double balance) {
+    public static Player createPlayerSpecifiedStatus(int id, Map map, Dice dice, double balance, Status status, int waitTurn, int freeTurn) {
         Player player = new Player(id, map, dice, balance);
-        player.status = Status.WAIT_COMMAND;
+        player.status = status;
+        player.waitTurn = waitTurn;
+        player.freeTurn = freeTurn;
+
         return player;
     }
 

@@ -30,7 +30,7 @@ public class PlayerRollToMagicHouseTest {
 
     @Test
     public void should_end_turn_when_roll_to_magic_house() throws Exception {
-        Player player = Player.createPlayerStartTurn(1, map, dice, 0);
+        Player player = Player.createPlayerSpecifiedStatus(1, map, dice, 0, Player.Status.WAIT_COMMAND, 0, 0);
 
         player.roll();
 

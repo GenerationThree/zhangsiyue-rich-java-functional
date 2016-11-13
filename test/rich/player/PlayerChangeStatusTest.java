@@ -24,7 +24,7 @@ public class PlayerChangeStatusTest {
     }
 
     @Test
-    public void should_change_to_wait_command_when_player_not_wait_start_his_turn() throws Exception {
+    public void should_change_to_wait_command_with_player_not_wait_when_start_his_turn() throws Exception {
         Player player = new Player(1, map, dice, START_BALANCE);
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
         assertThat(player.getWaitTurn(), is(0));
@@ -33,5 +33,10 @@ public class PlayerChangeStatusTest {
 
         assertThat(isStart, is(true));
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
+    }
+
+    @Test
+    public void should_end_turn_and_decrease_wait_turns_with_player_is_wait_when_start_his_turn() throws Exception {
+
     }
 }
