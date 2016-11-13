@@ -115,8 +115,6 @@ public class Player {
         }
         if(current instanceof MagicHouse)
             status = Status.END_TURN;
-        if (freeTurn > 0)
-            freeTurn--;
     }
 
     private void payFee(Player owner) {

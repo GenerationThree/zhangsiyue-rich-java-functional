@@ -50,10 +50,11 @@ public class PlayerRollOtherEstateTest {
     public void should_not_pay_when_free_for_fee_at_other_estate() throws Exception {
         final int freeTurn = 1;
         Player playerFree = Player.createPlayerFreeForFee(3, map, dice, startPoint, START_BALANCE, freeTurn);
+
+        System.out.println(playerFree.getFreeTurn());
         playerFree.roll();
 
-        assertThat(player.getBalance(), is(START_BALANCE));
-        assertThat(player.getFreeTurn(), is(freeTurn - 1));
+        assertThat(playerFree.getBalance(), is(START_BALANCE));
     }
 
     @Test
