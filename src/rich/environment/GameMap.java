@@ -83,7 +83,10 @@ public class GameMap implements Map {
     @Override
     public Land sellEstate(Player player, int i) {
         Estate estate = (Estate)landList.get(i);
-        estate.sell();
-        return estate;
+        if(estate.getOwner() == player) {
+            estate.sell();
+            return estate;
+        }
+        return null;
     }
 }

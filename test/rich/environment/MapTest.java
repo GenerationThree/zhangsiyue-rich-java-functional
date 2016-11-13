@@ -86,4 +86,20 @@ public class MapTest {
         assertThat(sold, is(estatePoint));
         assertThat(((Estate)sold).getOwner(), is(nullValue()));
     }
+
+    @Test
+    public void should_return_null_when_player_sell_not_owned_estate() throws Exception {
+        Land startPoint = mock(Land.class);
+        Land endPoint = mock(Land.class);
+        Player player = mock(Player.class);
+        Player otherPlayer = mock(Player.class);
+        Estate estatePoint = new Estate(otherPlayer, 200);
+        Map gameMap = GameMap.createGameMapWithBlock(1, startPoint, estatePoint, endPoint);
+
+        assertThat(estatePoint.getOwner(), is(otherPlayer));
+        Land sold = gameMap.sellEstate(player, 1);
+
+        assertThat(sold, is(nullValue()));
+        assertThat(estatePoint.getOwner(), is(otherPlayer));
+    }
 }
