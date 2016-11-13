@@ -23,6 +23,8 @@ public class Game implements GameControl {
 
     @Override
     public boolean addPlayer(int id) {
+        if(id < 1 || id >4)
+            return false;
         playerList.add(new Player(id, gameMap, gameDice));
         return true;
     }

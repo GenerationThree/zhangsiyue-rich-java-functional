@@ -17,4 +17,19 @@ public class GameControlTest {
 
         assertThat(game.getPlayerList().size(), is(1));
     }
+
+    @Test
+    public void should_not_add_player_with_invalid_id() throws Exception {
+        GameControl game = new Game();
+        assertThat(game.getPlayerList().size(), is(0));
+
+        game.addPlayer(0);
+
+        assertThat(game.getPlayerList().size(), is(0));
+
+        game.addPlayer(7);
+
+        assertThat(game.getPlayerList().size(), is(0));
+
+    }
 }
