@@ -120,11 +120,9 @@ public class MapTest {
     public void should_set_block_at_specified_position() throws Exception {
         GameControl gameControl = mock(GameControl.class);
         Land targetPoint = mock(Land.class);
-        Player otherPlayer = mock(Player.class);
-        when(otherPlayer.getCurrent()).thenReturn(endPoint);
+        when(player.getCurrent()).thenReturn(startPoint);
         List<Player> players = new ArrayList<Player>(){{
             add(player);
-            add(otherPlayer);
         }};
         when(gameControl.getPlayerList()).thenReturn(players);
         Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
@@ -152,5 +150,22 @@ public class MapTest {
         assertThat(gameMap.setBlock(startPoint, -5), is(false));
         Tool tool = gameMap.getTool(targetPoint);
         assertThat(tool, is(nullValue()));
+    }
+
+    @Test
+    public void should_not_set_block_when_specified_position_has_tool() throws Exception {
+        GameControl gameControl = mock(GameControl.class);
+        Land targetPoint = mock(Land.class);
+        when(player.getCurrent()).thenReturn(startPoint);
+        List<Player> players = new ArrayList<Player>(){{
+            add(player);
+        }};
+        when(gameControl.getPlayerList()).thenReturn(players);
+        Map gameMap = GameMap.createGameMagWithGameControl(gameControl, startPoint, targetPoint, endPoint);
+
+        assertThat(gameMap.setBlock(startPoint, -5), is(true));
+        assertThat(gameMap.setBlock(startPoint, -5), is(false));
+        Tool tool = gameMap.getTool(targetPoint);
+        assertThat(tool, notNullValue());
     }
 }

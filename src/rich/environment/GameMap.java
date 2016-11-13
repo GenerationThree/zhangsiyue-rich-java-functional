@@ -110,6 +110,8 @@ public class GameMap implements Map {
             targetPosition %= length;
 
         Land targetLand = landList.get(targetPosition);
+        if(getTool(targetLand) != null)
+            return false;
         for(Player player : gameControl.getPlayerList()){
             if (player.getCurrent().equals(targetLand))
                 return false;
