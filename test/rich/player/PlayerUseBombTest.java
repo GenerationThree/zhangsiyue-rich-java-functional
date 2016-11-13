@@ -38,4 +38,12 @@ public class PlayerUseBombTest {
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
 
     }
+
+    @Test
+    public void should_remove_bomb_after_use() throws Exception {
+        int preToolSum = player.getTools().size();
+        player.useTool(Tool.Type.BOMB, 2);
+
+        assertThat(player.getTools().size(), is(preToolSum - 1));
+    }
 }

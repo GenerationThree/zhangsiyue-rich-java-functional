@@ -243,6 +243,7 @@ public class Player {
                         }
                         return false;
                     case BOMB:
+                        tools.remove(tool);
                         return true;
                     default:
                         return false;
