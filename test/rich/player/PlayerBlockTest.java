@@ -33,7 +33,7 @@ public class PlayerBlockTest {
 
     @Test
     public void should_wait_command_after_use_block() throws Exception {
-        player.useBlock(2);
+        player.useTool(Tool.Type.BLOCK, 2);
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
 
@@ -42,7 +42,7 @@ public class PlayerBlockTest {
     @Test
     public void should_remove_block_after_use() throws Exception {
         int preToolSum = player.getTools().size();
-        player.useBlock(2);
+        player.useTool(Tool.Type.BLOCK, 2);
 
         assertThat(player.getTools().size(), is(preToolSum - 1));
     }
@@ -52,7 +52,7 @@ public class PlayerBlockTest {
         player = new Player(1, map, dice);
         int preToolSum = player.getTools().size();
 
-        player.useBlock(2);
+        player.useTool(Tool.Type.BLOCK, 2);
 
         assertThat(player.getTools().size(), is(preToolSum));
     }
@@ -61,7 +61,7 @@ public class PlayerBlockTest {
     public void should_not_remove_block_when_use_block_failed() throws Exception {
         when(map.setBlock(anyInt())).thenReturn(false);
         int preToolSum = player.getTools().size();
-        player.useBlock(2);
+        player.useTool(Tool.Type.BLOCK, 2);
 
         assertThat(player.getTools().size(), is(preToolSum));
     }

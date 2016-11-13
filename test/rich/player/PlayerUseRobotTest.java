@@ -27,7 +27,7 @@ public class PlayerUseRobotTest {
 
     @Test
     public void should_wait_command_after_use_robot() throws Exception {
-        player.useRobot();
+        player.useTool(Tool.Type.ROBOT, 0);
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
     }
@@ -40,7 +40,7 @@ public class PlayerUseRobotTest {
         player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
 
         assertThat(map.getTool(blockPoint), notNullValue());
-        player.useRobot();
+        player.useTool(Tool.Type.ROBOT, 0);
 
         assertThat(map.getTool(blockPoint), is(nullValue()));
         assertThat(player.getTools().size(), is(0));
@@ -56,7 +56,7 @@ public class PlayerUseRobotTest {
 
         assertThat(map.getTool(blockPoint), notNullValue());
 
-        player.useRobot();
+        player.useTool(Tool.Type.ROBOT, 0);
 
         assertThat(map.getTool(blockPoint), notNullValue());
     }

@@ -228,14 +228,26 @@ public class Player {
         return tools;
     }
 
-    public void useRobot() {
+    public boolean useTool(Tool.Type type, int distance){
         for (Tool tool:tools){
-            if(tool.getType() == Tool.Type.ROBOT) {
-                map.removeTool(current);
-                tools.remove(tool);
-                break;
+            if(tool.getType() == type) {
+                switch (tool.getType()){
+                    case ROBOT:
+                        map.removeTool(current);
+                        tools.remove(tool);
+                        return true;
+                    case BLOCK:
+                        if(map.setBlock(distance)) {
+                            tools.remove(tool);
+                            return true;
+                        }
+                        return false;
+                    default:
+                        return false;
+                }
             }
         }
+        return false;
     }
 
     public boolean sell(int i) {
@@ -255,18 +267,6 @@ public class Player {
                 tools.remove(tool);
                 points += tool.getPointPrice();
                 return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean useBlock(int distance) {
-        for (Tool tool:tools){
-            if(tool.getType() == Tool.Type.BLOCK) {
-                if(map.setBlock(distance)) {
-                    tools.remove(tool);
-                    return true;
-                }
             }
         }
         return false;
