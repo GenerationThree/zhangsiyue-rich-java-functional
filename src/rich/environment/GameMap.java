@@ -79,4 +79,9 @@ public class GameMap implements Map {
             }
         }
     }
+
+    @Override
+    public Land sellEstate(Player player, int i) {
+        return null;
+    }
 }

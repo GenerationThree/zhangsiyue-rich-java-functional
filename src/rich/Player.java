@@ -5,6 +5,8 @@ import rich.environment.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 public class Player {
 
     private final int id;
@@ -41,6 +43,14 @@ public class Player {
         Player player = new Player(id, map, dice);
         player.current = start;
         player.balance = balance;
+        return player;
+    }
+
+    public static Player createPlayerWithEstate(int id, Map map, Dice dice, Land start, double balance, Land...lands) {
+        Player player = new Player(id, map, dice);
+        player.current = start;
+        player.balance = balance;
+        player.lands.addAll(asList(lands));
         return player;
     }
 
@@ -229,7 +239,10 @@ public class Player {
     }
 
     public boolean sell(int i) {
-        return false;
+        Estate estate = (Estate) map.sellEstate(this, i);
+        balance += estate.getPrice() * estate.getLevel().ordinal() * 2;
+        lands.remove(estate);
+        return true;
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
