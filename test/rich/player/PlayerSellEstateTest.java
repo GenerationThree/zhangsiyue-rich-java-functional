@@ -28,7 +28,6 @@ public class PlayerSellEstateTest {
         estate = mock(Estate.class);
         startPoint = mock(Estate.class);
         map = mock(Map.class);
-        when(((Estate)estate).getOwner()).thenReturn(player);
         when(((Estate)estate).getPrice()).thenReturn(BASE_PRICE);
         when(((Estate)estate).getLevel()).thenReturn(Estate.Level.TWO);
         income = ((Estate)estate).getPrice() * ((Estate)estate).getLevel().ordinal() * 2;
@@ -51,5 +50,19 @@ public class PlayerSellEstateTest {
 
         assertThat(player.getLands().size(), is(estateSum - 1));
         assertThat(player.getBalance(), is(START_BALANCE + income));
+    }
+
+    @Test
+    public void should_not_sell_not_owned_estate() throws Exception {
+        when(map.sellEstate(any(), anyInt())).thenReturn(null);
+        int estateSum = player.getLands().size();
+        player = Player.createPlayerWithEstate(1, map, dice, startPoint, START_BALANCE, estate);
+
+        assertThat(estateSum, is(1));
+
+        player.sell(1);
+
+        assertThat(player.getLands().size(), is(estateSum));
+        assertThat(player.getBalance(), is(START_BALANCE));
     }
 }

@@ -239,10 +239,14 @@ public class Player {
     }
 
     public boolean sell(int i) {
-        Estate estate = (Estate) map.sellEstate(this, i);
-        balance += estate.getPrice() * estate.getLevel().ordinal() * 2;
-        lands.remove(estate);
-        return true;
+        Land land = map.sellEstate(this, i);
+        if(land != null) {
+            Estate estate = (Estate) land;
+            balance += estate.getPrice() * estate.getLevel().ordinal() * 2;
+            lands.remove(estate);
+            return true;
+        }
+        return false;
     }
 
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
