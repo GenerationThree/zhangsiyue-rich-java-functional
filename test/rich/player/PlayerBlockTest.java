@@ -17,13 +17,15 @@ public class PlayerBlockTest {
     private Dice dice;
     private Player player;
     private Land startPoint;
+    private Tool block;
 
     @Before
     public void setUp() throws Exception {
         dice = mock(Dice.class);
         map = mock(Map.class);
         startPoint = mock(Land.class);
-        player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.BLOCK));
+        block = new Tool(Tool.Type.BLOCK);
+        player = Player.createPlayerWithTool(1, map, dice, startPoint, block);
     }
 
     @Test
@@ -32,5 +34,13 @@ public class PlayerBlockTest {
 
         assertThat(player.getStatus(), is(Player.Status.WAIT_COMMAND));
 
+    }
+
+    @Test
+    public void should_remove_block_after_use() throws Exception {
+        int preToolSum = player.getTools().size();
+        player.useBlock();
+
+        assertThat(player.getTools().size(), is(preToolSum - 1));
     }
 }

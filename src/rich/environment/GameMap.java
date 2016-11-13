@@ -70,7 +70,7 @@ public class GameMap implements Map {
     }
 
     @Override
-    public void removeToll(Land current) {
+    public void removeTool(Land current) {
         int currentIndex = landList.indexOf(current);
         for (int i = 1; i <= 10; i++) {
             Land target = landList.get((currentIndex + i) % landList.size());

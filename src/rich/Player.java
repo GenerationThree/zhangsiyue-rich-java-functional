@@ -231,7 +231,7 @@ public class Player {
     public void useRobot() {
         for (Tool tool:tools){
             if(tool.getType() == Tool.Type.ROBOT) {
-                map.removeToll(current);
+                map.removeTool(current);
                 tools.remove(tool);
                 break;
             }
@@ -261,6 +261,12 @@ public class Player {
     }
 
     public boolean useBlock() {
+        for (Tool tool:tools){
+            if(tool.getType() == Tool.Type.BLOCK) {
+                tools.remove(tool);
+                break;
+            }
+        }
         return false;
     }
 

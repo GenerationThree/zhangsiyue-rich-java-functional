@@ -7,7 +7,7 @@ public interface Map {
 
     Tool getTool(Land current);
 
-    void removeToll(Land current);
+    void removeTool(Land current);
 
     Land sellEstate(Player player, int i);
 }

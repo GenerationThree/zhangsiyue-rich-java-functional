@@ -67,7 +67,7 @@ public class MapTest {
 
         assertThat(gameMap.getTool(blockPoint), notNullValue());
 
-        gameMap.removeToll(startPoint);
+        gameMap.removeTool(startPoint);
 
         assertThat(gameMap.getTool(blockPoint), is(nullValue()));
     }
