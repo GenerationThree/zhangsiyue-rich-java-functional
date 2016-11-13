@@ -134,8 +134,16 @@ public class Game implements GameControl {
             case ADD_PLAYER:
                 addPlayer(Integer.valueOf(command.getParameter()));
                 break;
+            case START_GAME:
+                chooseNextPlayer();
+                break;
             default:
                 return;
         }
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

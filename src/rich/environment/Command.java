@@ -19,6 +19,7 @@ public class Command {
 
     public enum Type{
         SET_INIT_BALANCE,
-        ADD_PLAYER
+        ADD_PLAYER,
+        START_GAME
     }
 }

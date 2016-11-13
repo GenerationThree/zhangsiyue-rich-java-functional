@@ -16,4 +16,6 @@ public interface GameControl {
     Player chooseNextPlayer();
 
     void handleCommand(Command command);
+
+    Player getCurrentPlayer();
 }

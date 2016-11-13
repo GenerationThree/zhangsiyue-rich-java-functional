@@ -5,6 +5,8 @@ import org.junit.Test;
 import rich.Player;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class GameControlHandleCommandTest {
@@ -35,5 +37,15 @@ public class GameControlHandleCommandTest {
         assertThat(game.getPlayerList().size(), is(0));
         game.handleCommand(addPlayerCommand);
         assertThat(game.getPlayerList().size(), is(1));
+    }
+
+    @Test
+    public void should_handle_start_game_test() throws Exception {
+        assertThat(game.getCurrentPlayer(), is(nullValue()));
+        game.addPlayer(1);
+        Command startGameCommand = new Command(Command.Type.START_GAME, "");
+        game.handleCommand(startGameCommand);
+        assertThat(game.getCurrentPlayer(), notNullValue());
+        assertThat(game.getCurrentPlayer().getId(), is(1));
     }
 }
