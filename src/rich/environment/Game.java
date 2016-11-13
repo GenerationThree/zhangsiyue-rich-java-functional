@@ -16,6 +16,7 @@ public class Game implements GameControl {
         playerList = new ArrayList<>();
         gameDice = new GameDice();
         gameMap = initMap();
+        initBalance = 10000;
     }
 
     private Map initMap(){
@@ -91,6 +92,8 @@ public class Game implements GameControl {
 
     @Override
     public boolean setInitBalance(double balance) {
+        if(balance < 1000 || balance > 50000)
+            return false;
         initBalance = balance;
         return true;
     }
