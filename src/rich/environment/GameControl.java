@@ -13,5 +13,5 @@ public interface GameControl {
 
     boolean setInitBalance(double balance);
 
-    Player chooseCurrentPlayer();
+    Player chooseNextPlayer();
 }

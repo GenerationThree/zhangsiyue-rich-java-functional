@@ -109,15 +109,17 @@ public class Game implements GameControl {
     }
 
     @Override
-    public Player chooseCurrentPlayer() {
+    public Player chooseNextPlayer() {
         if(currentPlayer == null)
             currentPlayer = playerList.get(0);
         else {
             int startIndex = playerList.indexOf(currentPlayer) + 1;
             for (int i = 0; i < playerList.size()-1 ; i ++){
                 Player checkPlayer = playerList.get((i + startIndex) % playerList.size());
-                if(checkPlayer.startTurn())
+                if(checkPlayer.startTurn()) {
                     currentPlayer = checkPlayer;
+                    break;
+                }
             }
         }
         return currentPlayer;
