@@ -266,6 +266,9 @@ public class Player {
 
     public boolean startTurn(){
         if(status == Status.END_TURN) {
+            if (freeTurn > 0){
+                freeTurn -- ;
+            }
             if(waitTurn == 0) {
                 status = Status.WAIT_COMMAND;
                 return true;

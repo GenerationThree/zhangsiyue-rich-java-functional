@@ -46,4 +46,15 @@ public class PlayerChangeStatusTest {
         assertThat(player.getStatus(), is(Player.Status.END_TURN));
         assertThat(player.getWaitTurn(), is(waitTurn - 1));
     }
+
+    @Test
+    public void should_decrease_free_turn_when_start_his_turn() throws Exception {
+        int freeTurn = 1;
+        Player player = Player.createPlayerSpecifiedStatus(1,map, dice, START_BALANCE, Player.Status.END_TURN, 0, freeTurn);
+
+        player.startTurn();
+
+        assertThat(player.getFreeTurn(), is(freeTurn - 1));
+
+    }
 }
