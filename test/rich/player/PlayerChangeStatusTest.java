@@ -37,6 +37,13 @@ public class PlayerChangeStatusTest {
 
     @Test
     public void should_end_turn_and_decrease_wait_turns_with_player_is_wait_when_start_his_turn() throws Exception {
+        int waitTurn = 1;
+        Player player = Player.createPlayerSpecifiedStatus(1,map, dice, START_BALANCE, Player.Status.END_TURN, waitTurn, 0);
 
+        boolean isStart = player.startTurn();
+
+        assertThat(isStart, is(false));
+        assertThat(player.getStatus(), is(Player.Status.END_TURN));
+        assertThat(player.getWaitTurn(), is(waitTurn - 1));
     }
 }

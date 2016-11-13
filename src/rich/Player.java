@@ -265,7 +265,16 @@ public class Player {
     }
 
     public boolean startTurn(){
-        status = Status.WAIT_COMMAND;
+        if(status == Status.END_TURN) {
+            if(waitTurn == 0) {
+                status = Status.WAIT_COMMAND;
+                return true;
+            }
+            else {
+                waitTurn -- ;
+                return false;
+            }
+        }
         return true;
     }
 
@@ -292,7 +301,6 @@ public class Player {
     public int getPoints() {
         return points;
     }
-
 
     public List<Tool> getTools() {
         return tools;
