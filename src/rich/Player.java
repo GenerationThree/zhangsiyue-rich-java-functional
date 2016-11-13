@@ -260,5 +260,9 @@ public class Player {
         return false;
     }
 
+    public boolean useBlock() {
+        return false;
+    }
+
     public enum Status {WAIT_COMMAND, WAIT_RESPONSE, END_TURN, END_GAME,}
 }

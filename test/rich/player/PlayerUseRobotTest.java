@@ -15,14 +15,12 @@ public class PlayerUseRobotTest {
     private Map map;
     private Dice dice;
     private Player player;
-    private Land land;
     private Land startPoint;
 
     @Before
     public void setUp() throws Exception {
         dice = mock(Dice.class);
         map = mock(Map.class);
-        land = mock(Land.class);
         startPoint = mock(Land.class);
         player = Player.createPlayerWithTool(1, map, dice, startPoint, new Tool(Tool.Type.ROBOT));
     }
