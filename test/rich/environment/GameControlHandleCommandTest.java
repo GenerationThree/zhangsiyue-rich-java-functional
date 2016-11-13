@@ -8,6 +8,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameControlHandleCommandTest {
 
@@ -47,5 +51,24 @@ public class GameControlHandleCommandTest {
         game.handleCommand(startGameCommand);
         assertThat(game.getCurrentPlayer(), notNullValue());
         assertThat(game.getCurrentPlayer().getId(), is(1));
+    }
+
+    @Test
+    public void should_handle_roll_command() throws Exception {
+        Map map = mock(Map.class);
+        Dice dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        Land destination = mock(Land.class);
+        when(map.move(any(), eq(1), any())).thenReturn(destination);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        game.addPlayer(1);
+        Command startGameCommand = new Command(Command.Type.START_GAME, "");
+        Command rollCommand = new Command(Command.Type.ROLL, "");
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+
+        assertThat(player.getCurrent(), is(destination));
     }
 }

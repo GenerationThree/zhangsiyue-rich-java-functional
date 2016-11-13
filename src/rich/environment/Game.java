@@ -29,6 +29,13 @@ public class Game implements GameControl {
         return game;
     }
 
+    public static Game createGameWithSpecifiedMapAndDice(Map map, Dice dice){
+        Game game = new Game();
+        game.gameMap = map;
+        game.gameDice = dice;
+        return game;
+    }
+
     private Map initMap(){
         List<Land> landList = new ArrayList<Land>(){{
             add(new StartPoint());
@@ -110,8 +117,10 @@ public class Game implements GameControl {
 
     @Override
     public Player chooseNextPlayer() {
-        if(currentPlayer == null)
+        if(currentPlayer == null) {
             currentPlayer = playerList.get(0);
+            currentPlayer.startTurn();
+        }
         else {
             int startIndex = playerList.indexOf(currentPlayer) + 1;
             for (int i = 0; i < playerList.size()-1 ; i ++){
@@ -136,6 +145,9 @@ public class Game implements GameControl {
                 break;
             case START_GAME:
                 chooseNextPlayer();
+                break;
+            case ROLL:
+                currentPlayer.roll();
                 break;
             default:
                 return;
