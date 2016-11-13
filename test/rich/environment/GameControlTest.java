@@ -5,17 +5,15 @@ import rich.Player;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class GameControlTest {
 
     @Test
     public void should_add_player_and_get_player_list() throws Exception {
-        Player player = mock(Player.class);
         GameControl game = new Game();
         assertThat(game.getPlayerList().size(), is(0));
 
-        game.addPlayer(player);
+        game.addPlayer(1);
 
         assertThat(game.getPlayerList().size(), is(1));
     }

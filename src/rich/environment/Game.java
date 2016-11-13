@@ -7,9 +7,13 @@ import java.util.List;
 
 public class Game implements GameControl {
     List<Player> playerList;
+    Map gameMap;
+    Dice gameDice;
 
     public Game() {
-        this.playerList = new ArrayList<>();
+        playerList = new ArrayList<>();
+        gameMap = new GameMap();
+        gameDice = new GameDice();
     }
 
     @Override
@@ -18,8 +22,8 @@ public class Game implements GameControl {
     }
 
     @Override
-    public boolean addPlayer(Player player) {
-        playerList.add(player);
+    public boolean addPlayer(int id) {
+        playerList.add(new Player(id, gameMap, gameDice));
         return true;
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 public interface GameControl {
     List<Player> getPlayerList();
 
-    boolean addPlayer(Player player);
+    boolean addPlayer(int id);
 }

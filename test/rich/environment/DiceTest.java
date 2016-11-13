@@ -12,6 +12,5 @@ public class DiceTest {
 
         int num = dice.next();
         assertThat(num >=1 && num <=6, is(true));
-
     }
 }
