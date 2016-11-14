@@ -190,7 +190,6 @@ public class GameControlHandleCommandTest {
         Player player = game.getCurrentPlayer();
 
         game.handleCommand(rollCommand);
-        System.out.println(player.getCurrent());
         game.handleCommand(sayYesCommand);
         double preBalance = player.getBalance();
         assertThat(preBalance, is(Double.valueOf(START_BALANCE) - 200));

@@ -30,7 +30,7 @@ public class PlayerSellEstateTest {
         map = mock(Map.class);
         when(((Estate)estate).getPrice()).thenReturn(BASE_PRICE);
         when(((Estate)estate).getLevel()).thenReturn(Estate.Level.TWO);
-        income = ((Estate)estate).getPrice() * ((Estate)estate).getLevel().ordinal() * 2;
+        income = ((Estate)estate).getPrice() * (((Estate)estate).getLevel().ordinal() + 1) * 2;
         when(map.sellEstate(any(), anyInt())).thenReturn(estate);
         player = Player.createPlayerWithEstate(1, map, dice, startPoint, START_BALANCE, estate);
     }

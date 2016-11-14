@@ -25,6 +25,7 @@ public class Command {
         SAY_YES,
         SAY_NO,
         SELECT_GIFT,
-        BUY_TOOL
+        BUY_TOOL,
+        SELL_ESTATE
     }
 }
