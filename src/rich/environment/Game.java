@@ -23,49 +23,49 @@ public class Game implements GameControl {
         currentPlayer = null;
     }
 
-    public static Game createGameWithSpecifiedPlayer(Player...players){
+    public static Game createGameWithSpecifiedPlayer(Player... players) {
         Game game = new Game();
         game.playerList.addAll(asList(players));
         return game;
     }
 
-    public static Game createGameWithSpecifiedMapAndDice(Map map, Dice dice){
+    public static Game createGameWithSpecifiedMapAndDice(Map map, Dice dice) {
         Game game = new Game();
         game.gameMap = map;
         game.gameDice = dice;
         return game;
     }
 
-    private Map initMap(){
-        List<Land> landList = new ArrayList<Land>(){{
+    private Map initMap() {
+        List<Land> landList = new ArrayList<Land>() {{
             add(new StartPoint());
         }};
 
-        for(int i = 0; i < 13; i++){
+        for (int i = 0; i < 13; i++) {
             landList.add(new Estate(null, 200));
         }
 
         landList.add(new Hospital());
 
-        for(int i = 0; i < 13; i++){
+        for (int i = 0; i < 13; i++) {
             landList.add(new Estate(null, 200));
         }
 
         landList.add(new ToolHouse());
 
-        for(int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
             landList.add(new Estate(null, 500));
         }
 
         landList.add(new GiftHouse());
 
-        for(int i = 0; i < 13; i++){
+        for (int i = 0; i < 13; i++) {
             landList.add(new Estate(null, 300));
         }
 
         landList.add(new Prison());
 
-        for(int i = 0; i < 13; i++){
+        for (int i = 0; i < 13; i++) {
             landList.add(new Estate(null, 300));
         }
 
@@ -78,7 +78,7 @@ public class Game implements GameControl {
         landList.add(new Mine(80));
         landList.add(new Mine(60));
 
-        Map gameMap =  new GameMap(landList);
+        Map gameMap = new GameMap(landList);
 
         return gameMap;
     }
@@ -109,7 +109,7 @@ public class Game implements GameControl {
 
     @Override
     public boolean setInitBalance(double balance) {
-        if(balance < 1000 || balance > 50000)
+        if (balance < 1000 || balance > 50000)
             return false;
         initBalance = balance;
         return true;
@@ -117,15 +117,14 @@ public class Game implements GameControl {
 
     @Override
     public Player chooseNextPlayer() {
-        if(currentPlayer == null) {
+        if (currentPlayer == null) {
             currentPlayer = playerList.get(0);
             currentPlayer.startTurn();
-        }
-        else {
+        } else {
             int startIndex = playerList.indexOf(currentPlayer) + 1;
-            for (int i = 0; i < playerList.size()-1 ; i ++){
+            for (int i = 0; i < playerList.size() - 1; i++) {
                 Player checkPlayer = playerList.get((i + startIndex) % playerList.size());
-                if(checkPlayer.startTurn()) {
+                if (checkPlayer.startTurn()) {
                     currentPlayer = checkPlayer;
                     break;
                 }
@@ -136,7 +135,7 @@ public class Game implements GameControl {
 
     @Override
     public void handleCommand(Command command) {
-        switch (command.getType()){
+        switch (command.getType()) {
             case SET_INIT_BALANCE:
                 setInitBalance(Double.valueOf(command.getParameter()));
                 break;
@@ -163,6 +162,10 @@ public class Game implements GameControl {
                 break;
             case SELL_ESTATE:
                 currentPlayer.sell(Integer.valueOf(command.getParameter()));
+                break;
+            case SELL_TOOL:
+                Tool.Type type = Tool.Type.values()[Integer.valueOf(command.getParameter()) - 1];
+                currentPlayer.sellTool(type);
                 break;
             default:
                 return;

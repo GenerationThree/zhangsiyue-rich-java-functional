@@ -28,6 +28,7 @@ public class GameControlHandleCommandTest {
     private Command selectGiftCommand;
     private Command buyToolCommand;
     private Command sellEstateCommand;
+    private Command sellToolCommand;
 
     @Before
     public void setUp() throws Exception {
@@ -41,6 +42,7 @@ public class GameControlHandleCommandTest {
         selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "1");
         buyToolCommand = new Command(Command.Type.BUY_TOOL, "1");
         sellEstateCommand = new Command(Command.Type.SELL_ESTATE, "1");
+        sellToolCommand = new Command(Command.Type.SELL_TOOL, "1");
     }
 
     @Test
@@ -199,5 +201,35 @@ public class GameControlHandleCommandTest {
         game.handleCommand(sellEstateCommand);
         assertThat(player.getBalance(), is(Double.valueOf(START_BALANCE) + 200));
         assertThat(player.getLands().size(), is(0));
+    }
+
+    @Test
+    public void should_handle_buy_and_sell_tool_command() throws Exception {
+        Dice dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        Land startPoint = new StartPoint();
+        Land giftHouse = new GiftHouse();
+        Land toolHouse = new ToolHouse();
+        Map map = new GameMap(startPoint, giftHouse, toolHouse);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "2");
+
+        game.handleCommand(setBalanceCommand);
+        game.addPlayer(1);
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(selectGiftCommand);
+        assertThat(player.getPoints(), is(200));
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(buyToolCommand);
+        assertThat(player.getTools().size(), is(1));
+        assertThat(player.getPoints(), is(200 - Tool.Type.BLOCK.getPointPrice()));
+
+        game.handleCommand(sellToolCommand);
+        assertThat(player.getTools().size(), is(0));
+        assertThat(player.getPoints(), is(200));
     }
 }
