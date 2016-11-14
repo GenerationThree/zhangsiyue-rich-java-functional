@@ -137,10 +137,10 @@ public class Game implements GameControl {
     public void handleCommand(Command command) {
         switch (command.getType()) {
             case SET_INIT_BALANCE:
-                setInitBalance(Double.valueOf(command.getParameter()));
+                setInitBalance(Double.valueOf(command.getFirstParameter()));
                 break;
             case ADD_PLAYER:
-                addPlayer(Integer.valueOf(command.getParameter()));
+                addPlayer(Integer.valueOf(command.getFirstParameter()));
                 break;
             case START_GAME:
                 chooseNextPlayer();
@@ -155,17 +155,22 @@ public class Game implements GameControl {
                 currentPlayer.sayNo();
                 break;
             case SELECT_GIFT:
-                currentPlayer.selectGift(Integer.valueOf(command.getParameter()));
+                currentPlayer.selectGift(Integer.valueOf(command.getFirstParameter()));
                 break;
             case BUY_TOOL:
-                currentPlayer.buyTool(command.getParameter());
+                currentPlayer.buyTool(command.getFirstParameter());
                 break;
             case SELL_ESTATE:
-                currentPlayer.sell(Integer.valueOf(command.getParameter()));
+                currentPlayer.sell(Integer.valueOf(command.getFirstParameter()));
                 break;
             case SELL_TOOL:
-                Tool.Type type = Tool.Type.values()[Integer.valueOf(command.getParameter()) - 1];
+                Tool.Type type = Tool.Type.values()[Integer.valueOf(command.getFirstParameter()) - 1];
                 currentPlayer.sellTool(type);
+                break;
+            case USE_TOOL:
+                Tool.Type useToolType = Tool.Type.values()[Integer.valueOf(command.getFirstParameter()) - 1];
+                int distance = Integer.valueOf(command.getLastParameter());
+                currentPlayer.useTool(useToolType, distance);
                 break;
             default:
                 return;

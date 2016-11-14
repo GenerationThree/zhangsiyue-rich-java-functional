@@ -29,20 +29,27 @@ public class GameControlHandleCommandTest {
     private Command buyToolCommand;
     private Command sellEstateCommand;
     private Command sellToolCommand;
+    private Dice dice;
+    private Map map;
+    private Command useToolCommand;
 
     @Before
     public void setUp() throws Exception {
         game = new Game();
-        startGameCommand = new Command(Command.Type.START_GAME, "");
-        rollCommand = new Command(Command.Type.ROLL, "");
-        addPlayerCommand = new Command(Command.Type.ADD_PLAYER, "1");
-        setBalanceCommand = new Command(Command.Type.SET_INIT_BALANCE, START_BALANCE);
-        sayYesCommand = new Command(Command.Type.SAY_YES, "");
-        sayNoCommand = new Command(Command.Type.SAY_NO, "");
-        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "1");
-        buyToolCommand = new Command(Command.Type.BUY_TOOL, "1");
-        sellEstateCommand = new Command(Command.Type.SELL_ESTATE, "1");
-        sellToolCommand = new Command(Command.Type.SELL_TOOL, "1");
+        dice = mock(Dice.class);
+        when(dice.next()).thenReturn(1);
+        startGameCommand = new Command(Command.Type.START_GAME, "", "");
+        rollCommand = new Command(Command.Type.ROLL, "", "");
+        addPlayerCommand = new Command(Command.Type.ADD_PLAYER, "1", "");
+        setBalanceCommand = new Command(Command.Type.SET_INIT_BALANCE, START_BALANCE , "");
+        sayYesCommand = new Command(Command.Type.SAY_YES, "", "");
+        sayNoCommand = new Command(Command.Type.SAY_NO, "", "");
+        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "1", "");
+        buyToolCommand = new Command(Command.Type.BUY_TOOL, "1", "");
+        sellEstateCommand = new Command(Command.Type.SELL_ESTATE, "1", "");
+        sellToolCommand = new Command(Command.Type.SELL_TOOL, "1", "");
+        useToolCommand = new Command(Command.Type.USE_TOOL, "1", "1");
+        map = mock(Map.class);
     }
 
     @Test
@@ -75,9 +82,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_roll_command() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Land destination = mock(Land.class);
         when(map.move(any(), eq(1), any())).thenReturn(destination);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
@@ -92,9 +96,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_say_yes_after_roll_to_empty() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Estate destination = new Estate(null, 200);
         when(map.move(any(), eq(1), any())).thenReturn(destination);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
@@ -113,9 +114,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_say_no_command_when_roll_to_empty() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Estate destination = new Estate(null, 200);
         when(map.move(any(), eq(1), any())).thenReturn(destination);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
@@ -135,9 +133,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_select_gift_command() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         GiftHouse giftHouse = new GiftHouse();
         when(map.move(any(), eq(1), any())).thenReturn(giftHouse);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
@@ -154,9 +149,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_buy_tool_command() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Mine minePoint = new Mine(50);
         ToolHouse toolHouse = new ToolHouse();
         when(map.move(any(), eq(1), any())).thenReturn(minePoint);
@@ -180,9 +172,6 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_sell_estate_command() throws Exception {
-        Map map = mock(Map.class);
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Estate estate = new Estate(null, 200);
         when(map.move(any(), eq(1), any())).thenReturn(estate);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
@@ -205,14 +194,12 @@ public class GameControlHandleCommandTest {
 
     @Test
     public void should_handle_buy_and_sell_tool_command() throws Exception {
-        Dice dice = mock(Dice.class);
-        when(dice.next()).thenReturn(1);
         Land startPoint = new StartPoint();
         Land giftHouse = new GiftHouse();
         Land toolHouse = new ToolHouse();
         Map map = new GameMap(startPoint, giftHouse, toolHouse);
         GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
-        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "2");
+        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "2", "");
 
         game.handleCommand(setBalanceCommand);
         game.addPlayer(1);
@@ -231,5 +218,32 @@ public class GameControlHandleCommandTest {
         game.handleCommand(sellToolCommand);
         assertThat(player.getTools().size(), is(0));
         assertThat(player.getPoints(), is(200));
+    }
+
+    @Test
+    public void should_handle_use_tool_test() throws Exception {
+        Land startPoint = new StartPoint();
+        Land giftHouse = new GiftHouse();
+        Land toolHouse = new ToolHouse();
+        Map map = GameMap.createGameMagWithGameControl(game, startPoint, giftHouse, toolHouse);
+        GameControl game = Game.createGameWithSpecifiedMapAndDice(map, dice);
+        selectGiftCommand = new Command(Command.Type.SELECT_GIFT, "2", "");
+
+        game.handleCommand(setBalanceCommand);
+        game.addPlayer(1);
+        game.handleCommand(startGameCommand);
+        Player player = game.getCurrentPlayer();
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(selectGiftCommand);
+
+        game.handleCommand(rollCommand);
+        game.handleCommand(buyToolCommand);
+
+        assertThat(map.getTool(startPoint), is(nullValue()));
+        assertThat(player.getTools().size(), is(1));
+        game.handleCommand(useToolCommand);
+        assertThat(map.getTool(startPoint), is(notNullValue()));
+        assertThat(player.getTools().size(), is(0));
     }
 }

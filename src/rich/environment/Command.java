@@ -2,19 +2,25 @@ package rich.environment;
 
 public class Command {
     private Type type;
-    private String parameter;
+    private String firstParameter;
+    private String lastParameter;
 
-    public Command(Type type, String parameter) {
+    public Command(Type type, String firstParameter, String lastParameter) {
         this.type = type;
-        this.parameter = parameter;
+        this.firstParameter = firstParameter;
+        this.lastParameter = lastParameter;
     }
 
     public Type getType() {
         return type;
     }
 
-    public String getParameter() {
-        return parameter;
+    public String getFirstParameter() {
+        return firstParameter;
+    }
+
+    public String getLastParameter() {
+        return lastParameter;
     }
 
     public enum Type{
@@ -27,6 +33,7 @@ public class Command {
         SELECT_GIFT,
         BUY_TOOL,
         SELL_ESTATE,
-        SELL_TOOL
+        SELL_TOOL,
+        USE_TOOL
     }
 }
