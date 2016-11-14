@@ -161,6 +161,9 @@ public class Game implements GameControl {
             case BUY_TOOL:
                 currentPlayer.buyTool(command.getParameter());
                 break;
+            case SELL_ESTATE:
+                currentPlayer.sell(Integer.valueOf(command.getParameter()));
+                break;
             default:
                 return;
         }

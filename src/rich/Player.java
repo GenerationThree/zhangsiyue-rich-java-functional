@@ -246,7 +246,7 @@ public class Player {
         Land land = map.sellEstate(this, i);
         if(land != null) {
             Estate estate = (Estate) land;
-            balance += estate.getPrice() * estate.getLevel().ordinal() * 2;
+            balance += estate.getPrice() * (estate.getLevel().ordinal() + 1) * 2;
             lands.remove(estate);
             return true;
         }
