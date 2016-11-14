@@ -79,6 +79,7 @@ public class Game implements GameControl {
         landList.add(new Mine(60));
 
         Map gameMap = new GameMap(landList);
+        gameMap.putInGame(this);
 
         return gameMap;
     }
